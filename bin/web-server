@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+const App = require('../src/app/web-server');
+
+const app = new App();
+app.run();

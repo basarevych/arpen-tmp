@@ -1,0 +1,125 @@
+/**
+ * Installation-specific application configuration
+ */
+const path = require('path');
+
+module.exports = {
+    // Server instance name (alphanumeric)
+    instance: 'server1',
+
+    // Environment
+    //env: process.env.NODE_ENV || 'production',
+    env: process.env.NODE_ENV || 'development',
+
+    // Loaded modules
+    modules: [
+        'index',
+    ],
+
+    // Web server
+    web_server: {
+        host: "0.0.0.0",
+        port: 3000,
+        ssl: {
+            enable: false,
+            key: '/usr/local/etc/letsencrypt/live/server1.example.com/privkey.pem',
+            cert: '/usr/local/etc/letsencrypt/live/server1.example.com/cert.pem',
+            ca: '/usr/local/etc/letsencrypt/live/server1.example.com/chain.pem',
+        },
+/*
+        user: { // Drop privileges, otherwise comment out this section
+            uid: 'www',
+            gid: 'www',
+        },
+*/
+        express: {
+            view_engine: 'pug',
+            case_sensitive_routing: true,
+            strict_routing: false,
+            trust_proxy: false,
+        },
+        options: {
+            body_limit: "500mb",
+        },
+        access_log: {
+            path: path.join(__dirname, '..', 'logs'),
+            interval: '1d',
+            mode: 0o640,
+        },
+    },
+
+    // SMTP servers
+    smtp: {
+        main: {
+            host: 'localhost',
+            port: 25,
+            ssl: false,
+            //user: 'username',
+            //password: 'password',
+        },
+    },
+
+    // PostgreSQL servers
+    postgres: {
+        main: {
+            host: 'localhost',
+            port: 5432,
+            user: 'username',
+            password: 'password',
+            db_name: 'dbname',
+            min_pool: 10,
+            max_pool: 100,
+        },
+    },
+
+    // Redis servers
+    redis: {
+        main: {
+            host: 'localhost',
+            port: 6379,
+            //password: 'password',
+        },
+    },
+
+    // RabbitMQ servers
+    rabbit: {
+        main: {
+            host: 'localhost',
+            port: 5672,
+            //vhost: '/',
+            //user: 'user',
+            //password: 'password',
+            ssl: {
+                enable: false,
+                key: '/usr/local/etc/letsencrypt/live/server1.example.com/privkey.pem',
+                cert: '/usr/local/etc/letsencrypt/live/server1.example.com/cert.pem',
+                ca: '/usr/local/etc/letsencrypt/live/server1.example.com/chain.pem',
+            },
+        },
+    },
+
+    session: {
+        expire_timeout: 14 * 24 * 60 * 60,  // seconds, delete inactive sessions
+        save_interval: 60,                  // seconds, 0 to update session in the DB on every request
+        secret: 'some unique secret here',  // could be "pwgen 32 1" output
+    },
+
+    email: {
+        from: 'root@localhost',
+        logger: {
+            error_enabled: false,           // email logger.error()s or not
+            warn_enabled: false,            // email logger.warn()s or not
+            to: 'debug@example.com',
+        },
+        launcher: {
+            enabled: false,                 // email program crash or not
+            to: 'debug@example.com',
+        },
+    },
+
+    cache: {
+        expire_min: 3 * 60,                 // seconds, minimum time to cache values for (random)
+        expire_max: 5 * 60,                 // seconds, maximum time to cache values for (random)
+        ignore_errors: false,               // will cache reject its promise on errors or not
+    },
+};
