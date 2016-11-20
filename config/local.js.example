@@ -107,8 +107,9 @@ module.exports = {
     email: {
         from: 'root@localhost',
         logger: {
-            error_enabled: false,           // email logger.error()s or not
+            info_enabled: false,            // email logger.info()s or not
             warn_enabled: false,            // email logger.warn()s or not
+            error_enabled: false,           // email logger.error()s or not
             to: 'debug@example.com',
         },
         launcher: {

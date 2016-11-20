@@ -2,6 +2,7 @@
  * Error handling middleware
  * @module arpen/middleware/error
  */
+const http = require('http');
 
 /**
  * Error handler
@@ -10,11 +11,15 @@ class ErrorHandler {
     /**
      * Create the service
      * @param {object} config           Configuration
+     * @param {ErrorHelper} error       Error helper service
      * @param {object} express          Express app
+     * @param {Logger} logger           Logger service
      */
-    constructor(config, express) {
+    constructor(config, error, express, logger) {
         this._config = config;
+        this._error = error;
         this._express = express;
+        this._logger = logger;
     }
 
     /**
@@ -30,7 +35,7 @@ class ErrorHandler {
      * @type {string[]}
      */
     static get requires() {
-        return [ 'config', 'express' ];
+        return [ 'config', 'error', 'express', 'logger' ];
     }
 
     /**
@@ -39,14 +44,28 @@ class ErrorHandler {
      */
     register() {
         this._express.use((req, res, next) => {
-            let err = new Error('Not Found');
-            err.status = 404;
-            next(err);
+            next(this._error.newNotFound());
         });
         this._express.use((err, req, res, next) => {
-            res.locals.message = err.message;
-            res.locals.error = this._config.get('env') === 'development' ? err : {};
-            res.status(err.status || 500);
+            let info = this._error.info(err);
+            let status = (info && info.httpStatus) || 500;
+
+            if (status === 500)
+                this._logger.error(err);
+
+            if (res.headersSent)
+                return;
+
+            res.locals.statusCode = status;
+            res.locals.statusPhrase = http.STATUS_CODES[status];
+            res.locals.data = null;
+            res.locals.errors = [];
+            if (this._config.get('env') === 'development' && status === 500) {
+                res.locals.data = JSON.stringify(info, undefined, 4);
+                res.locals.errors = this._error.flatten(err)
+            }
+
+            res.status(status);
             res.render('error');
         });
 

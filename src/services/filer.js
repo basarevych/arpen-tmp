@@ -1,6 +1,6 @@
 /**
  * File operations service
- * @module base/services/filer
+ * @module arpen/services/filer
  */
 const fs = require('fs-ext');
 const path = require('path');

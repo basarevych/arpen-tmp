@@ -10,8 +10,11 @@ const express = require('express');
 class IndexRoute {
     /**
      * Create service
+     * @param {ErrorHelper} error   Error helper service
      */
-    constructor() {
+    constructor(error) {
+        this._error = error;
+
         this.router = express.Router();
         this.router.get('/', this.index.bind(this));
     }
@@ -22,6 +25,14 @@ class IndexRoute {
      */
     static get provides() {
         return 'modules.index.routes.index';
+    }
+
+    /**
+     * Dependencies as constructor arguments
+     * @type {string[]}
+     */
+    static get requires() {
+        return [ 'error' ];
     }
 
     /**

@@ -1,9 +1,7 @@
 /**
  * Logger service
- * @module base/services/logger
+ * @module arpen/services/logger
  */
-const VError = require('verror');
-const WError = VError.WError;
 
 /**
  * Logger service
@@ -12,10 +10,12 @@ class Logger {
     /**
      * Create the service
      * @param {object} config       Config service
+     * @param {ErrorHelper} error   Error helper service
      * @param {Emailer} [emailer]   Emailer service if available
      */
-    constructor(config, emailer) {
+    constructor(config, error, emailer) {
         this._config = config;
+        this._error = error;
         this._emailer = emailer;
     }
 
@@ -32,7 +32,27 @@ class Logger {
      * @type {string[]}
      */
     static get requires() {
-        return [ 'config', 'emailer?' ];
+        return [ 'config', 'error', 'emailer?' ];
+    }
+
+    /**
+     * Format a log string
+     * @param {string} string       String to log
+     * @return {string}             Returns the string with date
+     */
+    static formatString(string) {
+        function padZero(number) {
+            let output = String(number);
+            if (output.length == 1)
+                output = '0' + output;
+            return output;
+        }
+
+        let date = new Date();
+        let dateString = date.getFullYear() + '-' + padZero(date.getMonth()+1) + '-' + padZero(date.getDate());
+        dateString += ' ' + padZero(date.getHours()) + ':' + padZero(date.getMinutes()) + ':' + padZero(date.getSeconds());
+
+        return "[" + dateString + "] " + string;
     }
 
     /**
@@ -67,9 +87,9 @@ class Logger {
     log(type, messages) {
         let flat = [];
         for (let msg of messages) {
-            if (msg instanceof WError) {
-                flat.push('Exception data: ' + JSON.stringify(VError.info(msg), undefined, 4));
-                flat = flat.concat(this.flattenWError(msg));
+            if (msg instanceof this._error.WError) {
+                flat.push('Exception data:\n' + JSON.stringify(this._error.info(msg), undefined, 4));
+                flat = flat.concat(this._error.flatten(msg));
             } else {
                 flat.push(msg);
             }
@@ -98,17 +118,17 @@ class Logger {
         switch (type) {
             case 'info':
                 logFunc = 'log';
-                logString = this.formatString(lines.join("\n"));
-                emailLog = false;
+                logString = this.constructor.formatString(lines.join("\n"));
+                emailLog = this._config.get('email.logger.info_enable');
                 break;
             case 'warn':
                 logFunc = 'log';
-                logString = this.formatString(lines.join("\n"));
+                logString = this.constructor.formatString(lines.join("\n"));
                 emailLog = this._config.get('email.logger.warn_enable');
                 break;
             case 'error':
                 logFunc = 'error';
-                logString = this.formatString(lines.join("\n"));
+                logString = this.constructor.formatString(lines.join("\n"));
                 emailLog = this._config.get('email.logger.error_enable');
                 break;
             default:
@@ -121,44 +141,14 @@ class Logger {
             return;
 
         this._emailer.send({
-            to: this._config.get('email.logger.to'),
-            from: this._config.get('email.from'),
-            subject: '[' + this._config.project + '] Message logged (' + type + ')',
-            text: logString,
-        });
-    }
-
-    /**
-     * Flatten WError instance
-     * @param {object} err          WError with possible previous errors set
-     * @return {object[]}           Returns array of all the errors
-     */
-    flattenWError(err) {
-        let result = [ err ];
-        if (!err.cause)
-            return result;
-
-        return result.concat(this.flattenWError(err.cause()));
-    }
-
-    /**
-     * Format a log string
-     * @param {string} string       String to log
-     * @return {string}             Returns the string with date
-     */
-    formatString(string) {
-        function padZero(number) {
-            let output = String(number);
-            if (output.length == 1)
-                output = '0' + output;
-            return output;
-        }
-
-        let date = new Date();
-        let dateString = date.getFullYear() + '-' + padZero(date.getMonth()+1) + '-' + padZero(date.getDate());
-        dateString += ' ' + padZero(date.getHours()) + ':' + padZero(date.getMinutes()) + ':' + padZero(date.getSeconds());
-
-        return "[" + dateString + "] " + string;
+                to: this._config.get('email.logger.to'),
+                from: this._config.get('email.from'),
+                subject: '[' + this._config.project + '] Message logged (' + type + ')',
+                text: logString,
+            })
+            .catch(error => {
+                console.error(this.constructor.formatString(`Could not email log message: ${error}`));
+            });
     }
 }
 
