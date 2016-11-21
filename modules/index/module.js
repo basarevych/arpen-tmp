@@ -33,14 +33,6 @@ class Index {
     }
 
     /**
-     * Module service is a singleton
-     * @type {string}
-     */
-    static get lifecycle() {
-        return 'singleton';
-    }
-
-    /**
      * Bootstrap the module
      * @return {Promise}
      */

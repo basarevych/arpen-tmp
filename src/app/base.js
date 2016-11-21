@@ -143,9 +143,14 @@ class App {
                 return this._loadSources();
             })
             .then(() => {
+                let modules = new Map();
+                this.registerInstance(modules, 'modules');
+
                 return this.search(/^modules\.[^.]+$/).reduce(
                     (prev, cur) => {
                         let _module = this.get(cur);
+                        modules.set(cur, _module);
+
                         return prev.then(() => {
                             debug(`Bootstrapping module '${cur}'`);
                             let result = _module.bootstrap();

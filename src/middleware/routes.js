@@ -9,11 +9,11 @@
 class Routes {
     /**
      * Create the service
-     * @param {App} app                 The application
+     * @param {Map} modules             Loaded application modules
      * @param {object} express          Express app
      */
-    constructor(app, express) {
-        this._app = app;
+    constructor(modules, express) {
+        this._modules = modules;
         this._express = express;
     }
 
@@ -30,7 +30,7 @@ class Routes {
      * @type {string[]}
      */
     static get requires() {
-        return [ 'app', 'express' ];
+        return [ 'modules', 'express' ];
     }
 
     /**
@@ -38,13 +38,12 @@ class Routes {
      * @return {Promise}
      */
     register() {
-        return this._app.search(/^modules\.[^.]+$/).reduce(
+        return Array.from(this._modules).reduce(
             (prev, cur) => {
-                let _module = this._app.get(cur);
                 return prev.then(() => {
-                    let result = _module.routes(this._express);
+                    let result = cur[1].routes(this._express);
                     if (result === null || typeof result != 'object' || typeof result.then != 'function')
-                        throw new Error(`Module '${cur}' routes() did not return a Promise`);
+                        throw new Error(`Module '${cur[0]}' routes() did not return a Promise`);
                     return result;
                 });
             },

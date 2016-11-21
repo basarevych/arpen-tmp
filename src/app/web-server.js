@@ -48,14 +48,19 @@ class WebServer extends App {
                 exp.set('views', views);
 
                 debug('Loading middleware');
-                let middleware = config.get('middleware');
-                if (!Array.isArray(middleware))
+                let middlewareConfig = config.get('middleware');
+                if (!Array.isArray(middlewareConfig))
                     return;
 
-                return middleware.reduce(
+                let loadedMiddleware = new Map();
+                this.registerInstance(loadedMiddleware, 'middleware');
+
+                return middlewareConfig.reduce(
                     (prev, cur) => {
                         return prev.then(() => {
                             let middleware = this.get(cur);
+                            loadedMiddleware.set(cur, middleware);
+
                             debug(`Registering middleware ${cur}`);
                             return middleware.register();
                         });
