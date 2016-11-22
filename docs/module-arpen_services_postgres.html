@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Module: arpen/services/filer</title>
+	<title>Documentation Module: arpen/services/postgres</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,7 +72,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: arpen/services/filer</h1>
+	<h1 class="page-title">Module: arpen/services/postgres</h1>
 <section>
 
 <header>
@@ -84,7 +84,7 @@
     <div class="container-overview">
     
         
-            <div class="description">File operations service</div>
+            <div class="description">Postgres service</div>
         
 
         
@@ -139,7 +139,10 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="module-arpen_services_filer-Filer.html">Filer</a></dt>
+            <dt><a href="module-arpen_services_postgres-PostgresClient.html">PostgresClient</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-arpen_services_postgres-Postgres.html">Postgres</a></dt>
             <dd></dd>
         </dl>
     
@@ -159,7 +162,7 @@
                 
 <hr>
 <dt>
-    <h4 class="name" id="~BufferFileUpdater"><span class="type-signature"></span>BufferFileUpdater(buffer)</h4>
+    <h4 class="name" id="~PostgresTransaction"><span class="type-signature"></span>PostgresTransaction(rollback)</h4>
     
     
 </dt>
@@ -167,7 +170,7 @@
 
     
     <div class="description">
-        Buffer updater callback
+        Transaction function
     </div>
     
 
@@ -202,13 +205,13 @@
 
         <tr>
             
-                <td class="name"><code>buffer</code></td>
+                <td class="name"><code>rollback</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Buffer</span>
+<span class="param-type">function</span>
 
 
 
@@ -219,7 +222,8 @@
 
             
 
-            <td class="description last">Previous file contents (Buffer)</td>
+            <td class="description last">Calling this function will immediately rollback the transaction,
+                             transaction promise will resolve to this function argument</td>
         </tr>
 
     
@@ -283,311 +287,7 @@
     
             
 <div class="param-desc">
-    Returns promise resolving to new file contents (Buffer)
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-            
-                
-<hr>
-<dt>
-    <h4 class="name" id="~StringFileUpdater"><span class="type-signature"></span>StringFileUpdater(contents)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        String updater callback
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>contents</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Previous file contents (string)</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Returns promise resolving to new file contents (string)
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-            
-                
-<hr>
-<dt>
-    <h4 class="name" id="~ProcessFileCallback"><span class="type-signature"></span>ProcessFileCallback(filename)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Callback for processing a file
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>filename</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Path of the file</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Should return a Promise
+    Returns promise resolving to transaction result
 </div>
 
 

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Module: arpen/services/filer</title>
+	<title>Documentation Class: Util</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,10 +72,19 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: arpen/services/filer</h1>
+	<h1 class="page-title">Class: Util</h1>
 <section>
 
 <header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-arpen_services_util.html">arpen/services/util</a>~</span>
+        
+        Util
+        </h2>
+        
+            <div class="class-description">Util helper</div>
+        
     
 </header>
 
@@ -84,10 +93,28 @@
     <div class="container-overview">
     
         
-            <div class="description">File operations service</div>
-        
+<hr>
+<dt>
+    <h4 class="name" id="Util"><span class="type-signature"></span>new Util()</h4>
+    
+    
+</dt>
+<dd>
 
-        
+    
+    <div class="description">
+        Create the service
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
 <dl class="details">
     
 
@@ -127,7 +154,21 @@
 </dl>
 
 
-        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
     
     </div>
 
@@ -136,30 +177,167 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
 
         <dl>
-            <dt><a href="module-arpen_services_filer-Filer.html">Filer</a></dt>
-            <dd></dd>
+            
+<hr>
+<dt class="name" id=".provides">
+    <h4 id=".provides"><span class="type-signature">&lt;static> </span>provides<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Service name is 'util'
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".requires">
+    <h4 id=".requires"><span class="type-signature">&lt;static> </span>requires<span class="type-signature"> :Array.&lt;string></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Dependencies as constructor arguments
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
         </dl>
     
 
     
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
-                
+            
 <hr>
 <dt>
-    <h4 class="name" id="~BufferFileUpdater"><span class="type-signature"></span>BufferFileUpdater(buffer)</h4>
+    <h4 class="name" id="trim"><span class="type-signature"></span>trim(value)</h4>
     
     
 </dt>
@@ -167,7 +345,8 @@
 
     
     <div class="description">
-        Buffer updater callback
+        Convert value to a trimmed string<br>
+Accepts string or number and returns empty string for anything else
     </div>
     
 
@@ -202,13 +381,13 @@
 
         <tr>
             
-                <td class="name"><code>buffer</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Buffer</span>
+<span class="param-type">*</span>
 
 
 
@@ -219,7 +398,7 @@
 
             
 
-            <td class="description last">Previous file contents (Buffer)</td>
+            <td class="description last">The value</td>
         </tr>
 
     
@@ -283,7 +462,7 @@
     
             
 <div class="param-desc">
-    Returns promise resolving to new file contents (Buffer)
+    Returns trimmed string
 </div>
 
 
@@ -294,7 +473,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type">string</span>
 
 
 
@@ -307,11 +486,11 @@
     
 </dd>
 
+        
             
-                
 <hr>
 <dt>
-    <h4 class="name" id="~StringFileUpdater"><span class="type-signature"></span>StringFileUpdater(contents)</h4>
+    <h4 class="name" id="getRandomInt"><span class="type-signature"></span>getRandomInt(min, max)</h4>
     
     
 </dt>
@@ -319,7 +498,7 @@
 
     
     <div class="description">
-        String updater callback
+        Returns a random integer between min (inclusive) and max (inclusive)
     </div>
     
 
@@ -354,7 +533,528 @@
 
         <tr>
             
-                <td class="name"><code>contents</code></td>
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Minimum</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Maximum</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns random in range
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getRandomString"><span class="type-signature"></span>getRandomString(length [, params])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get random string
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The length of a password</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Parameters object
+                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lower</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Include lower latin letters</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>upper</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Include upper latin letters</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>digits</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Include digits</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>special</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Include some special characters</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Returns the string
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="dashedToCamel"><span class="type-signature"></span>dashedToCamel(value)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Convert dashed name to camel case<br>
+example-name → exampleName
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
@@ -371,7 +1071,7 @@
 
             
 
-            <td class="description last">Previous file contents (string)</td>
+            <td class="description last">Dashed name</td>
         </tr>
 
     
@@ -435,7 +1135,7 @@
     
             
 <div class="param-desc">
-    Returns promise resolving to new file contents (string)
+    Returns camel case variant
 </div>
 
 
@@ -446,162 +1146,10 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-            
-                
-<hr>
-<dt>
-    <h4 class="name" id="~ProcessFileCallback"><span class="type-signature"></span>ProcessFileCallback(filename)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Callback for processing a file
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>filename</code></td>
-            
-
-            <td class="type">
-            
-                
 <span class="param-type">string</span>
 
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Path of the file</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Should return a Promise
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
     </dd>
 </dl>
 
@@ -611,7 +1159,9 @@
     
 </dd>
 
-            </dl>
+        </dl>
+    
+
     
 
     

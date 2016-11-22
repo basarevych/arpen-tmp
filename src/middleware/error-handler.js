@@ -62,7 +62,7 @@ class ErrorHandler {
             res.locals.errors = [];
             if (this._config.get('env') === 'development' && status === 500) {
                 res.locals.data = JSON.stringify(info, undefined, 4);
-                res.locals.errors = this._error.flatten(err)
+                res.locals.errors = this._error.flatten(err);
             }
 
             res.status(status);
