@@ -32,22 +32,6 @@ class ErrorHelper {
     }
 
     /**
-     * VError type
-     * @type {VError}
-     */
-    get VError() {
-        return VError;
-    }
-
-    /**
-     * WError type
-     * @type {WError}
-     */
-    get WError() {
-        return WError;
-    }
-
-    /**
      * Error info object
      * @param {Error} error         Error instance
      * @return {object}             Returns info object

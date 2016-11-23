@@ -3,6 +3,7 @@
  * @module arpen/services/emailer
  */
 const emailjs = require('emailjs/email');
+const WError = require('verror').WError;
 
 /**
  * Emailer
@@ -11,11 +12,9 @@ class Emailer {
     /**
      * Create the service
      * @param {object} config                   Configuration
-     * @param {ErrorHelper} error               Error helper
      */
-    constructor(config, error) {
+    constructor(config) {
         this._config = config;
-        this._error = error;
     }
 
     /**
@@ -31,7 +30,7 @@ class Emailer {
      * @type {string[]}
      */
     static get requires() {
-        return [ 'config', 'error' ];
+        return [ 'config' ];
     }
 
     /**
@@ -67,7 +66,7 @@ class Emailer {
                 this.connect(server)
                     .send(options, (err, message) => {
                         if (err)
-                            reject(new this._error.WError(err, 'Emailer.send()'));
+                            reject(new WError(err, 'Emailer.send()'));
                         else
                             resolve(message);
                     });

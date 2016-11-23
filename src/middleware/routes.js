@@ -39,11 +39,11 @@ class Routes {
      */
     register() {
         return Array.from(this._modules).reduce(
-            (prev, cur) => {
+            (prev, [ curName, curModule ]) => {
                 return prev.then(() => {
-                    let result = cur[1].routes(this._express);
+                    let result = curModule.routes(this._express);
                     if (result === null || typeof result != 'object' || typeof result.then != 'function')
-                        throw new Error(`Module '${cur[0]}' routes() did not return a Promise`);
+                        throw new Error(`Module '${curName}' routes() did not return a Promise`);
                     return result;
                 });
             },

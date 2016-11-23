@@ -5,6 +5,7 @@
 const debug = require('debug')('arpen:postgres');
 const moment = require('moment-timezone');
 const pg = require('pg');
+const WError = require('verror').WError;
 
 /**
  * Transaction function
@@ -82,7 +83,7 @@ class PostgresClient {
                     (error, result) => {
                         if (error) {
                             let sqlState = (typeof error.sqlState == 'undefined' ? error.code : error.sqlState);
-                            return reject(new this._postgres._error.WError(
+                            return reject(new WError(
                                 {
                                     cause: error,
                                     info: {
@@ -202,7 +203,7 @@ class PostgresClient {
 
                                 if (this._postgres._error.info(error).sql_state === '40001') { // SERIALIZATION FAILURE
                                     if (++numTries > this.maxTransactionRetries) {
-                                        return reject(new this._postgres._error.WError(
+                                        return reject(new WError(
                                             error,
                                             'Maximum transaction retries reached' +
                                             (params.name ? ` (in ${params.name}` : '')
@@ -249,13 +250,11 @@ class Postgres {
      * Create the service
      * @param {object} config       Config service
      * @param {Logger} logger       Logger service
-     * @param {ErrorHelper} error   Error helper service
      * @param {Util} util           Util service
      */
-    constructor(config, logger, error, util) {
+    constructor(config, logger, util) {
         this._config = config;
         this._logger = logger;
-        this._error = error;
         this._util = util;
 
         this._pool = new Map();
@@ -274,7 +273,7 @@ class Postgres {
      * @type {string[]}
      */
     static get requires() {
-        return [ 'config', 'logger', 'error', 'util' ];
+        return [ 'config', 'logger', 'util' ];
     }
 
     /**
@@ -322,7 +321,7 @@ class Postgres {
 
                 pool.connect((error, client, done) => {
                     if (error)
-                        return reject(new this._error.WError(error, `Postgres: Error connecting to ${name}`));
+                        return reject(new WError(error, `Postgres: Error connecting to ${name}`));
 
                     resolve(new PostgresClient(this, client, done));
                 });

@@ -2,6 +2,7 @@
  * Logger service
  * @module arpen/services/logger
  */
+const WError = require('verror').WError;
 
 /**
  * Logger service
@@ -87,7 +88,7 @@ class Logger {
     log(type, messages) {
         let flat = [];
         for (let msg of messages) {
-            if (msg instanceof this._error.WError) {
+            if (msg instanceof WError) {
                 flat.push('Exception data:\n' + JSON.stringify(this._error.info(msg), undefined, 4));
                 flat = flat.concat(this._error.flatten(msg));
             } else {
