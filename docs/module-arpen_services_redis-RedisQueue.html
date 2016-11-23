@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: PostgresClient</title>
+	<title>Documentation Class: RedisQueue</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: PostgresClient</h1>
+	<h1 class="page-title">Class: RedisQueue</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_postgres.html">arpen/services/postgres</a>~</span>
+            <span class="ancestors"><a href="module-arpen_services_redis.html">arpen/services/redis</a>~</span>
         
-        PostgresClient
+        RedisQueue
         </h2>
         
-            <div class="class-description">Postgres client</div>
+            <div class="class-description">Transaction queue</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="PostgresClient"><span class="type-signature"></span>new PostgresClient(service, client, done)</h4>
+    <h4 class="name" id="RedisQueue"><span class="type-signature"></span>new RedisQueue(client)</h4>
     
     
 </dt>
@@ -103,7 +103,7 @@
 
     
     <div class="description">
-        Create Postgres client
+        Create the queue
     </div>
     
 
@@ -138,30 +138,6 @@
 
         <tr>
             
-                <td class="name"><code>service</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Postgres</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Postgres service instance</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>client</code></td>
             
 
@@ -179,31 +155,7 @@
 
             
 
-            <td class="description last">Connected PG client</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>done</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Client termination function</td>
+            <td class="description last">Redis client</td>
         </tr>
 
     
@@ -232,8 +184,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -244,13 +194,13 @@
 
         <tr>
             
-                <td class="name"><code>client</code></td>
+                <td class="name"><code>empty</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">boolean</span>
 
 
 
@@ -260,130 +210,8 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">PG client</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>done</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">Client termination function</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maxTransactionRetries</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    59
-                
-                </td>
-            
-
-            <td class="description last">Max number of transaction retries on serialization failures</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>minTransactionDelay</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    100
-                
-                </td>
-            
-
-            <td class="description last">Minimum time to wait before retrying transaction</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maxTransactionDelay</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    1000
-                
-                </td>
-            
-
-            <td class="description last">Maximum time to wait before retrying transaction</td>
+            <td class="description last">Queue is empty flag</td>
         </tr>
 
     
@@ -466,7 +294,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="query"><span class="type-signature"></span>query(sql [, params])</h4>
+    <h4 class="name" id="clear"><span class="type-signature"></span>clear()</h4>
     
     
 </dt>
@@ -474,8 +302,85 @@
 
     
     <div class="description">
-        Run Postgres query<br>
-Date/Moment params are converted to strings in UTC timezone.
+        Clear the queue
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="add"><span class="type-signature"></span>add(command [, params])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Queue Redis command for transaction
     </div>
     
 
@@ -512,7 +417,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
         <tr>
             
-                <td class="name"><code>sql</code></td>
+                <td class="name"><code>command</code></td>
             
 
             <td class="type">
@@ -537,7 +442,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
             
 
-            <td class="description last">SQL query string</td>
+            <td class="description last">Command</td>
         </tr>
 
     
@@ -571,7 +476,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
             
 
-            <td class="description last">Query parameters</td>
+            <td class="description last">Command parameters</td>
         </tr>
 
     
@@ -631,332 +536,6 @@ Date/Moment params are converted to strings in UTC timezone.
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Resolves to query result
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="transaction"><span class="type-signature"></span>transaction( [params], cb)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Run a transaction
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
-                
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">Transaction name for debugging</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>isolation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'serializable'
-                
-                </td>
-            
-
-            <td class="description last">Isolation level</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>cb</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">PostgresTransaction</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The transaction</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Resolves to transaction result
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>

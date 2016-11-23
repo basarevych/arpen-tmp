@@ -24,14 +24,20 @@ const WError = require('verror').WError;
  * @property {number} maxTransactionDelay=1000      Maximum time to wait before retrying transaction
  */
 class PostgresClient {
-    constructor(postgres, client, done) {
+    /**
+     * Create Postgres client
+     * @param {Postgres} service                    Postgres service instance
+     * @param {object} client                       Connected PG client
+     * @param {function} done                       Client termination function
+     */
+    constructor(service, client, done) {
         this.client = client;
         this.done = done;
         this.maxTransactionRetries = 59;
         this.minTransactionDelay = 100;
         this.maxTransactionDelay = 1000;
 
-        this._postgres = postgres;
+        this._postgres = service;
         this._transactionLevel = 0;
     }
 
@@ -206,15 +212,20 @@ class PostgresClient {
                                         return reject(new WError(
                                             error,
                                             'Maximum transaction retries reached' +
-                                            (params.name ? ` (in ${params.name}` : '')
+                                            (params.name ? ` in ${params.name}` : '')
                                         ));
                                     }
+
+                                    this._postgres._logger.warn(
+                                        'Postgres transaction serialization failure' +
+                                        (params.name ? ` in ${params.name}` : '')
+                                    );
 
                                     let delay = this._postgres._util.getRandomInt(
                                         this.minTransactionDelay,
                                         this.maxTransactionDelay
                                     );
-                                    return setTimeout(function () { tryAgain(); }, delay);
+                                    return setTimeout(() => { tryAgain(); }, delay);
                                 }
 
                                 reject(error);
@@ -277,7 +288,7 @@ class Postgres {
     }
 
     /**
-     * This module is singleton
+     * This service is a singleton
      * @type {string}
      */
     static get lifecycle() {
@@ -295,7 +306,7 @@ class Postgres {
     /**
      * Obtain Postgres client
      * @param {string} name='main'              Server name in config
-     * @return {Promise}                        Resolves to connected client instance
+     * @return {Promise}                        Resolves to connected PostgresClient instance
      */
     connect(name = 'main') {
         return new Promise((resolve, reject) => {

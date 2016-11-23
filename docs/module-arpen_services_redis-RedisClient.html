@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: PostgresClient</title>
+	<title>Documentation Class: RedisClient</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: PostgresClient</h1>
+	<h1 class="page-title">Class: RedisClient</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_postgres.html">arpen/services/postgres</a>~</span>
+            <span class="ancestors"><a href="module-arpen_services_redis.html">arpen/services/redis</a>~</span>
         
-        PostgresClient
+        RedisClient
         </h2>
         
-            <div class="class-description">Postgres client</div>
+            <div class="class-description">Redis client</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="PostgresClient"><span class="type-signature"></span>new PostgresClient(service, client, done)</h4>
+    <h4 class="name" id="RedisClient"><span class="type-signature"></span>new RedisClient(service, client)</h4>
     
     
 </dt>
@@ -103,7 +103,7 @@
 
     
     <div class="description">
-        Create Postgres client
+        Create Redis client
     </div>
     
 
@@ -144,7 +144,7 @@
             <td class="type">
             
                 
-<span class="param-type">Postgres</span>
+<span class="param-type">Redis</span>
 
 
 
@@ -155,7 +155,7 @@
 
             
 
-            <td class="description last">Postgres service instance</td>
+            <td class="description last">Redis service instance</td>
         </tr>
 
     
@@ -179,31 +179,7 @@
 
             
 
-            <td class="description last">Connected PG client</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>done</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Client termination function</td>
+            <td class="description last">Redis client instance</td>
         </tr>
 
     
@@ -265,7 +241,7 @@
                 </td>
             
 
-            <td class="description last">PG client</td>
+            <td class="description last">Redis client</td>
         </tr>
 
     
@@ -466,7 +442,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="query"><span class="type-signature"></span>query(sql [, params])</h4>
+    <h4 class="name" id="query"><span class="type-signature"></span>query(command [, params])</h4>
     
     
 </dt>
@@ -474,8 +450,7 @@
 
     
     <div class="description">
-        Run Postgres query<br>
-Date/Moment params are converted to strings in UTC timezone.
+        Run Redis command
     </div>
     
 
@@ -512,7 +487,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
         <tr>
             
-                <td class="name"><code>sql</code></td>
+                <td class="name"><code>command</code></td>
             
 
             <td class="type">
@@ -537,7 +512,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
             
 
-            <td class="description last">SQL query string</td>
+            <td class="description last">Command</td>
         </tr>
 
     
@@ -571,7 +546,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
             
 
-            <td class="description last">Query parameters</td>
+            <td class="description last">Command parameters</td>
         </tr>
 
     
@@ -635,7 +610,7 @@ Date/Moment params are converted to strings in UTC timezone.
     
             
 <div class="param-desc">
-    Resolves to query result
+    Resolves to command reply
 </div>
 
 
@@ -753,8 +728,6 @@ Date/Moment params are converted to strings in UTC timezone.
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -791,10 +764,6 @@ Date/Moment params are converted to strings in UTC timezone.
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
             <td class="description last">Transaction name for debugging</td>
         </tr>
@@ -803,13 +772,13 @@ Date/Moment params are converted to strings in UTC timezone.
 
         <tr>
             
-                <td class="name"><code>isolation</code></td>
+                <td class="name"><code>watch</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;string></span>
 
 
 
@@ -819,6 +788,8 @@ Date/Moment params are converted to strings in UTC timezone.
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -827,14 +798,8 @@ Date/Moment params are converted to strings in UTC timezone.
             
 
             
-                <td class="default">
-                
-                    'serializable'
-                
-                </td>
-            
 
-            <td class="description last">Isolation level</td>
+            <td class="description last">Watched Redis keys</td>
         </tr>
 
     
@@ -854,7 +819,7 @@ Date/Moment params are converted to strings in UTC timezone.
             <td class="type">
             
                 
-<span class="param-type">PostgresTransaction</span>
+<span class="param-type">RedisTransaction</span>
 
 
 
@@ -873,7 +838,7 @@ Date/Moment params are converted to strings in UTC timezone.
 
             
 
-            <td class="description last">The transaction</td>
+            <td class="description last">The transaction function</td>
         </tr>
 
     
@@ -937,7 +902,8 @@ Date/Moment params are converted to strings in UTC timezone.
     
             
 <div class="param-desc">
-    Resolves to transaction result
+    Resolves to an array of two items: transaction result and queue
+                                             exec replies array
 </div>
 
 
@@ -1011,7 +977,7 @@ Date/Moment params are converted to strings in UTC timezone.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2016-11-23T16:09:49+02:00
+		on 2016-11-23T16:09:50+02:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
