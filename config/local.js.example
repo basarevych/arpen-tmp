@@ -119,6 +119,7 @@ module.exports = {
     },
 
     cache: {
+        redis: 'main',                      // Name of Redis configuration to use
         expire_min: 3 * 60,                 // seconds, minimum time to cache values for (random)
         expire_max: 5 * 60,                 // seconds, maximum time to cache values for (random)
         ignore_errors: false,               // will cache reject its promise on errors or not

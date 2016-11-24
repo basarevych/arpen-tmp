@@ -2,6 +2,7 @@
  * Logger service
  * @module arpen/services/logger
  */
+const util = require('util');
 const WError = require('verror').WError;
 
 /**
@@ -96,40 +97,45 @@ class Logger {
             }
         }
 
-        let lines = [], first = true;
-        for (let msg of flat) {
-            let prefix = '';
-            if (first)
-                first = false;
-            else
-                prefix = '  ';
+        let formatted = false, lines = [];
+        if (flat.length && /%[sdj]/.test(String(flat[0]))) {
+            formatted = true;
+        } else {
+            let first = true
+            for (let msg of flat) {
+                let prefix = '';
+                if (first)
+                    first = false;
+                else
+                    prefix = '  ';
 
-            if (!(msg instanceof Error)) {
-                lines.push(prefix + (typeof msg == 'object' ? JSON.stringify(msg) : msg));
-                continue;
+                if (!(msg instanceof Error)) {
+                    lines.push(prefix + (typeof msg == 'object' ? JSON.stringify(msg) : msg));
+                    continue;
+                }
+
+                if (msg.stack)
+                    lines.push(prefix + msg.stack);
+                else
+                    lines.push(prefix + msg.message);
             }
-
-            if (msg.stack)
-                lines.push(prefix + msg.stack);
-            else
-                lines.push(prefix + msg.message);
         }
 
         let logFunc, logString, emailLog;
         switch (type) {
             case 'info':
                 logFunc = 'log';
-                logString = this.constructor.formatString(lines.join("\n"));
+                logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
                 emailLog = this._config.get('email.logger.info_enable');
                 break;
             case 'warn':
                 logFunc = 'log';
-                logString = this.constructor.formatString(lines.join("\n"));
+                logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
                 emailLog = this._config.get('email.logger.warn_enable');
                 break;
             case 'error':
                 logFunc = 'error';
-                logString = this.constructor.formatString(lines.join("\n"));
+                logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
                 emailLog = this._config.get('email.logger.error_enable');
                 break;
             default:

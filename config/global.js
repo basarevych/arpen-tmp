@@ -8,6 +8,7 @@ module.exports = {
     // Load base classes and services
     autoload: [
         'src/services',
+        'src/subscribers',
         'src/middleware'
     ],
 

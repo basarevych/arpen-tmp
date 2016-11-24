@@ -137,30 +137,16 @@ class App {
                 resolve();
             })
             .then(() => {
-                return this._loadConfig();
+                return this._initConfig();
             })
             .then(() => {
-                return this._loadSources();
+                return this._initSources();
             })
             .then(() => {
-                let modules = new Map();
-                this.registerInstance(modules, 'modules');
-
-                return this.search(/^modules\.[^.]+$/).reduce(
-                    (prev, cur) => {
-                        let _module = this.get(cur);
-                        modules.set(cur, _module);
-
-                        return prev.then(() => {
-                            debug(`Bootstrapping module '${cur}'`);
-                            let result = _module.bootstrap();
-                            if (result === null || typeof result != 'object' || typeof result.then != 'function')
-                                throw new Error(`Module '${cur}' bootstrap() did not return a Promise`);
-                            return result;
-                        });
-                    },
-                    Promise.resolve()
-                );
+                return this._initModules();
+            })
+            .then(() => {
+                return this._initSubscribers();
             })
             .then(() => {
                 this._initialized = true;
@@ -185,7 +171,7 @@ class App {
      * Load the configuration
      * @return {Promise}
      */
-    _loadConfig() {
+    _initConfig() {
         let config, modules = [];
         debug('Loading application configuration');
         return Promise.all([
@@ -278,7 +264,7 @@ class App {
      * Load the source files
      * @return {Promise}
      */
-    _loadSources() {
+    _initSources() {
         let config = this.get('config');
         let filer = new Filer();
         debug('Loading application sources');
@@ -343,6 +329,48 @@ class App {
                     Promise.resolve()
                 );
             });
+    }
+
+    _initModules() {
+        let modules = new Map();
+        this.registerInstance(modules, 'modules');
+
+        return this.search(/^modules\.[^.]+$/).reduce(
+            (prev, cur) => {
+                let _module = this.get(cur);
+                modules.set(cur, _module);
+
+                return prev.then(() => {
+                    debug(`Bootstrapping module '${cur}'`);
+                    let result = _module.bootstrap();
+                    if (result === null || typeof result != 'object' || typeof result.then != 'function')
+                        throw new Error(`Module '${cur}' bootstrap() did not return a Promise`);
+                    return result;
+                });
+            },
+            Promise.resolve()
+        );
+    }
+
+    _initSubscribers() {
+        let subscribers = new Map();
+        this.registerInstance(subscribers, 'subscribers');
+
+        return this.search(/^subscribers\.[^.]+$/).reduce(
+            (prev, cur) => {
+                let subscriber = this.get(cur);
+                subscribers.set(cur, subscriber);
+
+                return prev.then(() => {
+                    debug(`Registering  subscriber '${cur}'`);
+                    let result = subscriber.register();
+                    if (result === null || typeof result != 'object' || typeof result.then != 'function')
+                        throw new Error(`Subscriber '${cur}' register() did not return a Promise`);
+                    return result;
+                });
+            },
+            Promise.resolve()
+        );
     }
 
     /**

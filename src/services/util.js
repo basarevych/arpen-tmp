@@ -54,6 +54,11 @@ class Util {
      * @return {number}             Returns random in range
      */
     getRandomInt(min, max) {
+        if (typeof min != 'number')
+            throw new Error('Minimum is not a Number');
+        if (typeof max != 'number')
+            throw new Error('Maximum is not a Number');
+
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 

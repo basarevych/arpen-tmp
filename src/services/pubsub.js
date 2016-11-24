@@ -266,11 +266,13 @@ class PubSub {
      * @param {object} config       Config service
      * @param {Postgres} postgres   Postgres service
      * @param {Redis} redis         Redis service
+     * @param {Logger} logger       Logger service
      */
-    constructor(config, postgres, redis) {
+    constructor(config, postgres, redis, logger) {
         this._config = config;
         this._postgres = postgres;
         this._redis = redis;
+        this._logger = logger;
         this._cache = new Map();
     }
 
@@ -287,7 +289,7 @@ class PubSub {
      * @type {string[]}
      */
     static get requires() {
-        return [ 'config', 'postgres', 'redis' ];
+        return [ 'config', 'postgres', 'redis', 'logger' ];
     }
 
     /**
@@ -300,11 +302,12 @@ class PubSub {
 
     /**
      * Get pubsub client
+     * @param {string} [subscriberName]             This subscriber name
      * @param {string} [serverName='redis.main']    Server name like 'redis.main' or 'postgres.main'
      * @param {string|null} [cacheName=null]        Store and later reuse this pubsub client under this name
      * @return {Promise}                            Resolves to corresponding pubsub client instance
      */
-    connect(serverName = 'redis.main', cacheName = null) {
+    connect(subscriberName = null, serverName = 'redis.main', cacheName = null) {
         return new Promise((resolve, reject) => {
                 if (cacheName && this._cache.has(cacheName))
                     return resolve(this._cache.get(cacheName));
@@ -320,7 +323,13 @@ class PubSub {
                         this._postgres.connect(name)
                             .then(pub => {
                                 let connString = `postgresql://${config.user}:${config.password}@${config.host}:${config.port}/${config.db_name}`;
-                                let sub = new PGPubSub(connString);
+                                let sub = new PGPubSub(connString, {
+                                    log: (...args) => {
+                                        if (args.length)
+                                            args[0] = `[${subscriberName}] ${args[0]}`;
+                                        this._logger.info(...args);
+                                    }
+                                });
                                 resolve(new PostgresPubSub(pub, sub));
                             })
                             .catch(error => {
