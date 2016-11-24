@@ -5,7 +5,8 @@
 const debug = require('debug')('arpen:postgres');
 const moment = require('moment-timezone');
 const pg = require('pg');
-const WError = require('verror').WError;
+const VError = require('verror');
+const WError = VError.WError;
 
 /**
  * Transaction function
@@ -18,7 +19,6 @@ const WError = require('verror').WError;
 /**
  * Postgres client
  * @property {object} client                        PG client
- * @property {function} done                        Client termination function
  * @property {number} maxTransactionRetries=59      Max number of transaction retries on serialization failures
  * @property {number} minTransactionDelay=100       Minimum time to wait before retrying transaction
  * @property {number} maxTransactionDelay=1000      Maximum time to wait before retrying transaction
@@ -32,13 +32,20 @@ class PostgresClient {
      */
     constructor(service, client, done) {
         this.client = client;
-        this.done = done;
         this.maxTransactionRetries = 59;
         this.minTransactionDelay = 100;
         this.maxTransactionDelay = 1000;
 
+        this._done = done;
         this._postgres = service;
         this._transactionLevel = 0;
+    }
+
+    /**
+     * Client termination
+     */
+    done() {
+        return this._done;
     }
 
     /**
@@ -111,10 +118,10 @@ class PostgresClient {
     /**
      * Run a transaction
      * @param {object} [params]
-     * @param {string} [params.name]                    Transaction name for debugging
-     * @param {string} params.isolation='serializable'  Isolation level
-     * @param {PostgresTransaction} cb                  The transaction
-     * @return {Promise}                                Resolves to transaction result
+     * @param {string} [params.name]                        Transaction name for debugging
+     * @param {string} [params.isolation='serializable']    Isolation level
+     * @param {PostgresTransaction} cb                      The transaction
+     * @return {Promise}                                    Resolves to transaction result
      */
     transaction() {
         let params = { isolation: 'serializable' }, cb;
@@ -207,7 +214,7 @@ class PostgresClient {
                                 if (error instanceof RollbackError)
                                     return resolve(error.result);
 
-                                if (this._postgres._error.info(error).sql_state === '40001') { // SERIALIZATION FAILURE
+                                if (VError.info(error).sql_state === '40001') { // SERIALIZATION FAILURE
                                     if (++numTries > this.maxTransactionRetries) {
                                         return reject(new WError(
                                             error,

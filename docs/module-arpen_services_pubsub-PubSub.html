@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: RedisQueue</title>
+	<title>Documentation Class: PubSub</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: RedisQueue</h1>
+	<h1 class="page-title">Class: PubSub</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_redis.html">arpen/services/redis</a>~</span>
+            <span class="ancestors"><a href="module-arpen_services_pubsub.html">arpen/services/pubsub</a>~</span>
         
-        RedisQueue
+        PubSub
         </h2>
         
-            <div class="class-description">Transaction queue</div>
+            <div class="class-description">PubSub service</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="RedisQueue"><span class="type-signature"></span>new RedisQueue(client)</h4>
+    <h4 class="name" id="PubSub"><span class="type-signature"></span>new PubSub(config, postgres, redis)</h4>
     
     
 </dt>
@@ -103,7 +103,7 @@
 
     
     <div class="description">
-        Create the queue
+        Create the service
     </div>
     
 
@@ -138,7 +138,7 @@
 
         <tr>
             
-                <td class="name"><code>client</code></td>
+                <td class="name"><code>config</code></td>
             
 
             <td class="type">
@@ -155,52 +155,20 @@
 
             
 
-            <td class="description last">Redis client</td>
+            <td class="description last">Config service</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>empty</code></td>
+                <td class="name"><code>postgres</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">Postgres</span>
 
 
 
@@ -211,106 +179,37 @@
 
             
 
-            <td class="description last">Queue is empty flag</td>
+            <td class="description last">Postgres service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>redis</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Redis</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Redis service</td>
         </tr>
 
     
     </tbody>
 </table>
-</dl>
 
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="clear"><span class="type-signature"></span>clear()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Clear the queue
-    </div>
-    
-
-    
-
-    
-
-    
     
 
     
@@ -368,11 +267,246 @@
     
 </dd>
 
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id=".provides">
+    <h4 id=".provides"><span class="type-signature">&lt;static> </span>provides<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Service name is 'pubsub'
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
         
             
 <hr>
+<dt class="name" id=".requires">
+    <h4 id=".requires"><span class="type-signature">&lt;static> </span>requires<span class="type-signature"> :Array.&lt;string></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Dependencies as constructor arguments
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".lifecycle">
+    <h4 id=".lifecycle"><span class="type-signature">&lt;static> </span>lifecycle<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        This service is a singleton
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
 <dt>
-    <h4 class="name" id="add"><span class="type-signature"></span>add(command [, params])</h4>
+    <h4 class="name" id="connect"><span class="type-signature"></span>connect( [serverName] [, cacheName])</h4>
     
     
 </dt>
@@ -380,7 +514,7 @@
 
     
     <div class="description">
-        Queue Redis command for transaction
+        Get pubsub client
     </div>
     
 
@@ -407,6 +541,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -417,45 +553,13 @@
 
         <tr>
             
-                <td class="name"><code>command</code></td>
+                <td class="name"><code>serverName</code></td>
             
 
             <td class="type">
             
                 
 <span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Command</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
 
 
 
@@ -475,8 +579,57 @@
             
 
             
+                <td class="default">
+                
+                    'redis.main'
+                
+                </td>
+            
 
-            <td class="description last">Command parameters</td>
+            <td class="description last">Server name like 'redis.main' or 'postgres.main'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cacheName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Store and later reuse this pubsub client under this name</td>
         </tr>
 
     
@@ -536,6 +689,30 @@
     
 
     
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves to corresponding pubsub client instance
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
 
     
 </dd>

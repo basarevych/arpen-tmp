@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: RedisQueue</title>
+	<title>Documentation Class: RedisPubSub</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: RedisQueue</h1>
+	<h1 class="page-title">Class: RedisPubSub</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_redis.html">arpen/services/redis</a>~</span>
+            <span class="ancestors"><a href="module-arpen_services_pubsub.html">arpen/services/pubsub</a>~</span>
         
-        RedisQueue
+        RedisPubSub
         </h2>
         
-            <div class="class-description">Transaction queue</div>
+            <div class="class-description">Redis PUBSUB client</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="RedisQueue"><span class="type-signature"></span>new RedisQueue(client)</h4>
+    <h4 class="name" id="RedisPubSub"><span class="type-signature"></span>new RedisPubSub()</h4>
     
     
 </dt>
@@ -103,7 +103,7 @@
 
     
     <div class="description">
-        Create the queue
+        Create the client
     </div>
     
 
@@ -112,56 +112,6 @@
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>client</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Redis client</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -194,13 +144,13 @@
 
         <tr>
             
-                <td class="name"><code>empty</code></td>
+                <td class="name"><code>pub</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">object</span>
 
 
 
@@ -211,7 +161,55 @@
 
             
 
-            <td class="description last">Queue is empty flag</td>
+            <td class="description last">PUB client (RedisClient)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sub</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">SUB client (RedisClient)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>channels</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Map</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Registered channels (name → Set of handlers)</td>
         </tr>
 
     
@@ -294,7 +292,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="clear"><span class="type-signature"></span>clear()</h4>
+    <h4 class="name" id="done"><span class="type-signature"></span>done()</h4>
     
     
 </dt>
@@ -302,7 +300,7 @@
 
     
     <div class="description">
-        Clear the queue
+        Client termination
     </div>
     
 
@@ -372,7 +370,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="add"><span class="type-signature"></span>add(command [, params])</h4>
+    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe(channel, handler)</h4>
     
     
 </dt>
@@ -380,7 +378,7 @@
 
     
     <div class="description">
-        Queue Redis command for transaction
+        Subscribe to a channel
     </div>
     
 
@@ -403,8 +401,6 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
         
 
@@ -417,7 +413,7 @@
 
         <tr>
             
-                <td class="name"><code>command</code></td>
+                <td class="name"><code>channel</code></td>
             
 
             <td class="type">
@@ -431,31 +427,23 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Command</td>
+            <td class="description last">Channel name</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>handler</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array</span>
+<span class="param-type">Subscriber</span>
 
 
 
@@ -463,20 +451,666 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
-                
+            
 
+            <td class="description last">Handler function</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves on success
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="unsubscribe"><span class="type-signature"></span>unsubscribe(channel, handler)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Unsubscribe from a channel
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
                 
-                </td>
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
             
 
             
 
-            <td class="description last">Command parameters</td>
+            <td class="description last">Channel name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Subscriber</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Handler function</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves on success
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="publish"><span class="type-signature"></span>publish(channel, message)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Publish a message after passing it through JSON.stringify()
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Channel name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Message</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves on success
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="onSubscribe"><span class="type-signature"></span>onSubscribe(channel)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Subscribe event handler
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Channel name</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="onMessage"><span class="type-signature"></span>onMessage(channel, message)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Message event handler
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Channel name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Message</td>
         </tr>
 
     

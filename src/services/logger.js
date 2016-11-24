@@ -83,7 +83,7 @@ class Logger {
     /**
      * Actually log the error
      * @param {string} type         Type of the error message
-     * @param [Array] messages      Array of messages
+     * @param {Array} messages      Array of messages
      */
     log(type, messages) {
         let flat = [];

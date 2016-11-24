@@ -56,7 +56,6 @@ class RedisQueue {
 /**
  * Redis client
  * @property {object} client                        Redis client
- * @property {function} done                        Client termination function
  * @property {number} maxTransactionRetries=59      Max number of transaction retries on serialization failures
  * @property {number} minTransactionDelay=100       Minimum time to wait before retrying transaction
  * @property {number} maxTransactionDelay=1000      Maximum time to wait before retrying transaction
@@ -69,7 +68,6 @@ class RedisClient {
      */
     constructor(service, client) {
         this.client = client;
-        this.done = () => { this.client.quit(); };
         this.maxTransactionRetries = 59;
         this.minTransactionDelay = 100;
         this.maxTransactionDelay = 1000;
@@ -79,12 +77,21 @@ class RedisClient {
     }
 
     /**
+     * Client termination
+     */
+    done() {
+        return this.client.quit();
+    }
+
+    /**
      * Run Redis command
      * @param {string} command                      Command
      * @param {Array} [params]                      Command parameters
      * @return {Promise}                            Resolves to command reply
      */
     query(command, params = []) {
+        debug(command.toUpperCase() + ' ' + params);
+
         return new Promise((resolve, reject) => {
                 let method = this._client[command.toLowerCase()];
                 if (typeof method != 'function')

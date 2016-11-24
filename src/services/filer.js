@@ -171,10 +171,10 @@ class Filer {
      * Lock a file (exclusively) and write to it
      * @param {string} filename             File path and name
      * @param {Buffer} buffer               New file contents
-     * @param {object} params               File parameters (not changed if omitted)
-     * @param {number} params.mode=null     Mode
-     * @param {number} params.uid=null      UID
-     * @param {number} params.gid=null      GID
+     * @param {object} [params]             File parameters (not changed if omitted)
+     * @param {number} [params.mode=null]   Mode
+     * @param {number} [params.uid=null]    UID
+     * @param {number} [params.gid=null]    GID
      * @return {Promise}                    Resolves to true on success
      */
     lockWriteBuffer(filename, buffer, { mode = null, uid = null, gid = null } = {}) {
@@ -224,10 +224,10 @@ class Filer {
      * Convert string to a Buffer and do a .lockWriteBuffer()
      * @param {string} filename             File path and name
      * @param {string} contents             New file contents
-     * @param {object} params               File parameters (not changed if omitted)
-     * @param {number} params.mode=null     Mode
-     * @param {number} params.uid=null      UID
-     * @param {number} params.gid=null      GID
+     * @param {object} [params]             File parameters (not changed if omitted)
+     * @param {number} [params.mode=null]   Mode
+     * @param {number} [params.uid=null]    UID
+     * @param {number} [params.gid=null]    GID
      * @return {Promise}                    Resolves to true on success
      */
     lockWrite(filename, contents, { mode = null, uid = null, gid = null } = {}) {
@@ -239,10 +239,10 @@ class Filer {
      * Lock a file (exclusively) and update it using Buffer
      * @param {string} filename             File path and name
      * @param {BufferFileUpdater} cb        Buffer updater callback
-     * @param {object} params               File parameters (not changed if omitted)
-     * @param {number} params.mode=null     Mode
-     * @param {number} params.uid=null      UID
-     * @param {number} params.gid=null      GID
+     * @param {object} [params]             File parameters (not changed if omitted)
+     * @param {number} [params.mode=null]   Mode
+     * @param {number} [params.uid=null]    UID
+     * @param {number} [params.gid=null]    GID
      * @return {Promise}                    Resolves to true on success
      */
     lockUpdateBuffer(filename, cb, { mode = null, uid = null, gid = null } = {}) {
@@ -302,10 +302,10 @@ class Filer {
      * Lock a file (exclusively) and update it using string
      * @param {string} filename             File path and name
      * @param {StringFileUpdater} cb        String updater callback
-     * @param {object} params               File parameters (not changed if omitted)
-     * @param {number} params.mode=null     Mode
-     * @param {number} params.uid=null      UID
-     * @param {number} params.gid=null      GID
+     * @param {object} [params]             File parameters (not changed if omitted)
+     * @param {number} [params.mode=null]   Mode
+     * @param {number} [params.uid=null]    UID
+     * @param {number} [params.gid=null]    GID
      * @return {Promise}                    Resolves to true on success
      */
     lockUpdate(filename, cb, { mode = null, uid = null, gid = null } = {}) {
@@ -325,10 +325,10 @@ class Filer {
     /**
      * Create a directory (recursively)
      * @param {string} filename             Absolute path of the directory
-     * @param {object} params               File parameters (not changed if omitted)
-     * @param {number} params.mode=null     Mode
-     * @param {number} params.uid=null      UID
-     * @param {number} params.gid=null      GID
+     * @param {object} [params]             File parameters (not changed if omitted)
+     * @param {number} [params.mode=null]   Mode
+     * @param {number} [params.uid=null]    UID
+     * @param {number} [params.gid=null]    GID
      * @return {Promise}                    Resolves to true on success
      */
     createDirectory(filename, { mode = null, uid = null, gid = null } = {}) {
@@ -381,10 +381,10 @@ class Filer {
     /**
      * Create a file (its base dir must exist)
      * @param {string} filename             Absolute path of the file
-     * @param {object} params               File parameters (not changed if omitted)
-     * @param {number} params.mode=null     Mode
-     * @param {number} params.uid=null      UID
-     * @param {number} params.gid=null      GID
+     * @param {object} [params]             File parameters (not changed if omitted)
+     * @param {number} [params.mode=null]   Mode
+     * @param {number} [params.uid=null]    UID
+     * @param {number} [params.gid=null]    GID
      * @return {Promise}                    Resolves to true on success
      */
     createFile(filename, { mode = null, uid = null, gid = null } = {}) {

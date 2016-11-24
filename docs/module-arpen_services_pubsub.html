@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: RedisQueue</title>
+	<title>Documentation Module: arpen/services/pubsub</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,19 +72,10 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: RedisQueue</h1>
+	<h1 class="page-title">Module: arpen/services/pubsub</h1>
 <section>
 
 <header>
-    
-        <h2>
-            <span class="ancestors"><a href="module-arpen_services_redis.html">arpen/services/redis</a>~</span>
-        
-        RedisQueue
-        </h2>
-        
-            <div class="class-description">Transaction queue</div>
-        
     
 </header>
 
@@ -93,134 +84,13 @@
     <div class="container-overview">
     
         
-<hr>
-<dt>
-    <h4 class="name" id="RedisQueue"><span class="type-signature"></span>new RedisQueue(client)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Create the queue
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
+            <div class="description">PUBSUB service</div>
         
 
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>client</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Redis client</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
 <dl class="details">
     
 
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>empty</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Queue is empty flag</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
 	
 
 	
@@ -257,21 +127,7 @@
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
+        
     
     </div>
 
@@ -280,269 +136,161 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="clear"><span class="type-signature"></span>clear()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Clear the queue
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
+            <dt><a href="module-arpen_services_pubsub-PostgresPubSub.html">PostgresPubSub</a></dt>
+            <dd></dd>
         
-            
-<hr>
-<dt>
-    <h4 class="name" id="add"><span class="type-signature"></span>add(command [, params])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Queue Redis command for transaction
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
+            <dt><a href="module-arpen_services_pubsub-RedisPubSub.html">RedisPubSub</a></dt>
+            <dd></dd>
         
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>command</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Command</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Command parameters</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
+            <dt><a href="module-arpen_services_pubsub-PubSub.html">PubSub</a></dt>
+            <dd></dd>
         </dl>
     
 
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        <dl>
+                
+<hr>
+<dt>
+    <h4 class="name" id="~Subscriber"><span class="type-signature"></span>Subscriber(message)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Channel message callback
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The message after passing it through JSON.parse(). If it fails then
+                                                 the raw message is used as this argument</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+            </dl>
     
 
     
