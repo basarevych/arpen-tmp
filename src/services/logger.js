@@ -101,7 +101,7 @@ class Logger {
         if (flat.length && /%[sdj]/.test(String(flat[0]))) {
             formatted = true;
         } else {
-            let first = true
+            let first = true;
             for (let msg of flat) {
                 let prefix = '';
                 if (first)
@@ -121,27 +121,25 @@ class Logger {
             }
         }
 
-        let logFunc, logString, emailLog;
+        let logFunc, emailLog;
         switch (type) {
             case 'info':
                 logFunc = 'log';
-                logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
                 emailLog = this._config.get('email.logger.info_enable');
                 break;
             case 'warn':
                 logFunc = 'log';
-                logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
                 emailLog = this._config.get('email.logger.warn_enable');
                 break;
             case 'error':
                 logFunc = 'error';
-                logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
                 emailLog = this._config.get('email.logger.error_enable');
                 break;
             default:
                 throw new Error(`Invalid type: ${type}`);
         }
 
+        let logString = this.constructor.formatString(formatted ? util.format(...flat) : lines.join("\n"));
         console[logFunc](logString);
 
         if (!emailLog || !this._emailer)
