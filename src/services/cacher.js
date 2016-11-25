@@ -112,14 +112,9 @@ class Cacher {
     /**
      * Get variable value refreshing its lifetime
      * @param {string} name                     The name
-     * @param {number} [ttl]                    Time before expiration is seconds, use 0 to store forever.
-     *                                          If undefined then default (random) value will be used
      * @return {Promise}                        Resolves to variable value or undefined
      */
-    get(name, ttl) {
-        if (typeof ttl == 'undefined')
-            ttl = this._util.getRandomInt(this._config.get('cache.expire_min'), this._config.get('cache.expire_max'));
-
+    get(name) {
         return this._clientPromise
                 .then(
                     client => {
@@ -131,10 +126,7 @@ class Cacher {
                                 }
 
                                 debug(`Getting ${name}`);
-                                return client.query('EXPIRE', [ this._getKey(name), ttl ])
-                                    .then(result => {
-                                        return JSON.parse(result);
-                                    });
+                                return JSON.parse(result);
                             })
                             .then(
                                 value => {
