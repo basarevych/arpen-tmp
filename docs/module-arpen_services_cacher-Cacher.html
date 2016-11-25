@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: ErrorHelper</title>
+	<title>Documentation Class: Cacher</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: ErrorHelper</h1>
+	<h1 class="page-title">Class: Cacher</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_error.html">arpen/services/error</a>~</span>
+            <span class="ancestors"><a href="module-arpen_services_cacher.html">arpen/services/cacher</a>~</span>
         
-        ErrorHelper
+        Cacher
         </h2>
         
-            <div class="class-description">Error helper</div>
+            <div class="class-description">Cacher</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="ErrorHelper"><span class="type-signature"></span>new ErrorHelper()</h4>
+    <h4 class="name" id="Cacher"><span class="type-signature"></span>new Cacher(config, redis, logger, util)</h4>
     
     
 </dt>
@@ -112,6 +112,128 @@
     
 
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Configuration</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>redis</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Redis</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Redis service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Logger</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Logger service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>util</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Util</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Util service</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
     
 
     
@@ -196,7 +318,7 @@
 <dd>
     
     <div class="description">
-        Service name is 'error'
+        Service name is 'cacher'
     </div>
     
 
@@ -327,6 +449,66 @@
     
 </dd>
 
+        
+            
+<hr>
+<dt class="name" id=".lifecycle">
+    <h4 id=".lifecycle"><span class="type-signature">&lt;static> </span>lifecycle<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        This service is a singleton
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
         </dl>
     
 
@@ -337,7 +519,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="info"><span class="type-signature"></span>info(error)</h4>
+    <h4 class="name" id="set"><span class="type-signature"></span>set(name, value [, ttl])</h4>
     
     
 </dt>
@@ -345,311 +527,7 @@
 
     
     <div class="description">
-        Error info object
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>error</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Error</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Error instance</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Returns info object
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="flatten"><span class="type-signature"></span>flatten(error)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Flatten WError instance
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>error</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">WError with possible previous errors set</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Returns array of all the errors
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;object></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="newBadRequest"><span class="type-signature"></span>newBadRequest( [message])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Instantiate HTTP 400 error
+        Set variable to a new value
     </div>
     
 
@@ -676,8 +554,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -688,13 +564,77 @@
 
         <tr>
             
-                <td class="name"><code>message</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
             
                 
 <span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The value</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ttl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
 
 
 
@@ -714,14 +654,9 @@
             
 
             
-                <td class="default">
-                
-                    400: Bad Request
-                
-                </td>
-            
 
-            <td class="description last">Error message</td>
+            <td class="description last">Time before expiration is seconds, use 0 to store forever.
+                                         If undefined then default (random) value will be used</td>
         </tr>
 
     
@@ -785,7 +720,7 @@
     
             
 <div class="param-desc">
-    Returns prepared WError instance
+    Resolves on success
 </div>
 
 
@@ -796,7 +731,7 @@
     </dt>
     <dd>
         
-<span class="param-type">WError</span>
+<span class="param-type">Promise</span>
 
 
 
@@ -813,7 +748,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="newUnauthorized"><span class="type-signature"></span>newUnauthorized( [message])</h4>
+    <h4 class="name" id="get"><span class="type-signature"></span>get(name)</h4>
     
     
 </dt>
@@ -821,7 +756,7 @@
 
     
     <div class="description">
-        Instantiate HTTP 401 error
+        Get variable value refreshing its lifetime
     </div>
     
 
@@ -844,11 +779,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -860,7 +791,7 @@
 
         <tr>
             
-                <td class="name"><code>message</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -874,26 +805,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    401: Unauthorized
-                
-                </td>
-            
 
-            <td class="description last">Error message</td>
+            <td class="description last">The name</td>
         </tr>
 
     
@@ -957,7 +872,7 @@
     
             
 <div class="param-desc">
-    Returns prepared WError instance
+    Resolves to variable value or undefined
 </div>
 
 
@@ -968,7 +883,7 @@
     </dt>
     <dd>
         
-<span class="param-type">WError</span>
+<span class="param-type">Promise</span>
 
 
 
@@ -985,7 +900,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="newForbidden"><span class="type-signature"></span>newForbidden( [message])</h4>
+    <h4 class="name" id="unset"><span class="type-signature"></span>unset(name)</h4>
     
     
 </dt>
@@ -993,7 +908,7 @@
 
     
     <div class="description">
-        Instantiate HTTP 403 error
+        Remove variable
     </div>
     
 
@@ -1016,11 +931,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1032,7 +943,7 @@
 
         <tr>
             
-                <td class="name"><code>message</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -1046,26 +957,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    403: Forbidden
-                
-                </td>
-            
 
-            <td class="description last">Error message</td>
+            <td class="description last">The name</td>
         </tr>
 
     
@@ -1129,7 +1024,7 @@
     
             
 <div class="param-desc">
-    Returns prepared WError instance
+    Resolves on success
 </div>
 
 
@@ -1140,7 +1035,7 @@
     </dt>
     <dd>
         
-<span class="param-type">WError</span>
+<span class="param-type">Promise</span>
 
 
 
@@ -1157,7 +1052,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="newNotFound"><span class="type-signature"></span>newNotFound( [message])</h4>
+    <h4 class="name" id="_getKey"><span class="type-signature"></span>_getKey(name)</h4>
     
     
 </dt>
@@ -1165,7 +1060,7 @@
 
     
     <div class="description">
-        Instantiate HTTP 404 error
+        Convert variable name to Redis key
     </div>
     
 
@@ -1188,11 +1083,7 @@
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -1204,7 +1095,7 @@
 
         <tr>
             
-                <td class="name"><code>message</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -1218,26 +1109,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
-                <td class="default">
-                
-                    404: Not Found
-                
-                </td>
-            
 
-            <td class="description last">Error message</td>
+            <td class="description last">Cache variable name</td>
         </tr>
 
     
@@ -1301,7 +1176,7 @@
     
             
 <div class="param-desc">
-    Returns prepared WError instance
+    Returns corresponding Redis key
 </div>
 
 
@@ -1312,7 +1187,7 @@
     </dt>
     <dd>
         
-<span class="param-type">WError</span>
+<span class="param-type">string</span>
 
 
 
@@ -1375,7 +1250,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2016-11-25T15:20:54+02:00
+		on 2016-11-25T15:20:53+02:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
