@@ -54,7 +54,7 @@ class InvalidateCache {
         this._cacher.unset('sql:' + message.key)
             .catch(error => {
                 this._logger.error('Invalidation of the cache failed', error);
-            })
+            });
     }
 }
 

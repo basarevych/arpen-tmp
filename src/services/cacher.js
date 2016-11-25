@@ -21,6 +21,22 @@ class Cacher {
         this._redis = redis;
         this._logger = logger;
         this._util = util;
+
+        this._clientPromise = new Promise((resolve, reject) => {
+            if (!this._config.get('cache.enable'))
+                return reject();
+
+            this._redis.connect(this._config.get('cache.redis'))
+                .then(
+                    client => {
+                        resolve(client);
+                    },
+                    error => {
+                        this._logger.error(`Cacher could not connect to the cache: ${error}`);
+                        reject(error);
+                    }
+                );
+        });
     }
 
     /**
@@ -40,6 +56,13 @@ class Cacher {
     }
 
     /**
+     * This service is a singleton
+     */
+    static get lifecycle() {
+        return 'singleton';
+    }
+
+    /**
      * Set variable to a new value
      * @param {string} name                     The name
      * @param {*} value                         The value
@@ -55,30 +78,34 @@ class Cacher {
         if (typeof ttl == 'undefined')
             ttl = this._util.getRandomInt(this._config.get('cache.expire_min'), this._config.get('cache.expire_max'));
 
-        return this._redis.connect(this._config.get('cache.redis'))
-            .then(client => {
-                debug(`Setting ${name}`);
-                return client.query('SET', [ this._getKey(name), value ])
-                    .then(() => {
-                        if (ttl)
-                            return client.query('EXPIRE', [ this._getKey(name), ttl ]);
-                    })
-                    .then(
-                        value => {
-                            client.done();
-                            return value;
-                        },
-                        error => {
-                            client.done();
-                            throw error;
-                        }
-                    );
-            })
+        return this._clientPromise
+            .then(
+                client => {
+                    debug(`Setting ${name}`);
+                    return client.query('SET', [ this._getKey(name), value ])
+                        .then(() => {
+                            if (ttl)
+                                return client.query('EXPIRE', [ this._getKey(name), ttl ]);
+                        })
+                        .then(
+                            value => {
+                                client.done();
+                                return value;
+                            },
+                            error => {
+                                client.done();
+                                throw error;
+                            }
+                        );
+                },
+                () => {
+                    debug(`Cache disabled, couldn't set ${name}`);
+                    return undefined;
+                }
+            )
             .catch(error => {
-                if (this._config.get('cache.ignore_errors'))
-                    this._logger.warn('Cacher.set() - Redis error (ignoring)', error);
-                else
-                    throw new WError(error, 'Cacher.set()');
+                this._logger.error(new WError(error, 'Cacher.set()'));
+                return undefined;
             });
     }
 
@@ -93,37 +120,41 @@ class Cacher {
         if (typeof ttl == 'undefined')
             ttl = this._util.getRandomInt(this._config.get('cache.expire_min'), this._config.get('cache.expire_max'));
 
-        return this._redis.connect(this._config.get('cache.redis'))
-                .then(client => {
-                    return client.query('GET', [ this._getKey(name) ])
-                        .then(result => {
-                            if (result === null) {
-                                debug(`Missed ${name}`);
-                                return undefined;
-                            }
+        return this._clientPromise
+                .then(
+                    client => {
+                        return client.query('GET', [ this._getKey(name) ])
+                            .then(result => {
+                                if (result === null) {
+                                    debug(`Missed ${name}`);
+                                    return undefined;
+                                }
 
-                            debug(`Getting ${name}`);
-                            return client.query('EXPIRE', [ this._getKey(name), ttl ])
-                                .then(result => {
-                                    return JSON.parse(result);
-                                });
-                        })
-                        .then(
-                            value => {
-                                client.done();
-                                return value;
-                            },
-                            error => {
-                                client.done();
-                                throw error;
-                            }
-                        );
-                })
+                                debug(`Getting ${name}`);
+                                return client.query('EXPIRE', [ this._getKey(name), ttl ])
+                                    .then(result => {
+                                        return JSON.parse(result);
+                                    });
+                            })
+                            .then(
+                                value => {
+                                    client.done();
+                                    return value;
+                                },
+                                error => {
+                                    client.done();
+                                    throw error;
+                                }
+                            );
+                    },
+                    () => {
+                        debug(`Cache disabled, couldn't get ${name}`);
+                        return undefined;
+                    }
+                )
                 .catch(error => {
-                    if (this._config.get('cache.ignore_errors'))
-                        this._logger.warn('Cacher.get() - Redis error (ignoring)', error);
-                    else
-                        throw new WError(error, 'Cacher.get()');
+                    this._logger.error(new WError(error, 'Cacher.get()'));
+                    return undefined;
                 });
     }
 
@@ -133,32 +164,36 @@ class Cacher {
      * @return {Promise}                        Resolves on success
      */
     unset(name) {
-        return this._redis.connect(this._config.get('cache.redis'))
-                .then(client => {
-                    return client.query('EXISTS', [ this._getKey(name) ])
-                        .then(result => {
-                            if (!result)
-                                return;
+        return this._clientPromise
+                .then(
+                    client => {
+                        return client.query('EXISTS', [ this._getKey(name) ])
+                            .then(result => {
+                                if (!result)
+                                    return;
 
-                            debug(`Unsetting ${name}`);
-                            return client.query('DEL', [ this._getKey(name) ]);
-                        })
-                        .then(
-                            value => {
-                                client.done();
-                                return value;
-                            },
-                            error => {
-                                client.done();
-                                throw error;
-                            }
-                        );
-                })
+                                debug(`Unsetting ${name}`);
+                                return client.query('DEL', [ this._getKey(name) ]);
+                            })
+                            .then(
+                                value => {
+                                    client.done();
+                                    return value;
+                                },
+                                error => {
+                                    client.done();
+                                    throw error;
+                                }
+                            );
+                    },
+                    () => {
+                        debug(`Cache disabled, couldn't unset ${name}`);
+                        return undefined;
+                    }
+                )
                 .catch(error => {
-                    if (this._config.get('cache.ignore_errors'))
-                        this._logger.warn('Cacher.unset() - Redis error (ignoring)', error);
-                    else
-                        throw new WError(error, 'Cacher.unset()');
+                    this._logger.error(new WError(error, 'Cacher.unset()'));
+                    return undefined;
                 });
     }
 
