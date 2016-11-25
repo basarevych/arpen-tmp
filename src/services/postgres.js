@@ -333,7 +333,7 @@ class Postgres {
                     });
                     this._pool.set(name, pool);
                     pool.on('error', (error, client) => {
-                        this._logger.error(`Postgres idle client error (${name})`, error);
+                        this._logger.warn(`Postgres idle client error on ${name}: ${error.message}`);
                     });
                 }
 

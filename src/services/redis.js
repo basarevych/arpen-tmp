@@ -291,16 +291,13 @@ class Redis {
                 if (this._config.redis[name].password)
                     options.auth_pass = this._config.redis[name].password;
 
-                try {
-                    let client = redis.createClient(
-                        this._config.redis[name].port,
-                        this._config.redis[name].host,
-                        options
-                    );
-                    resolve(new RedisClient(this, client));
-                } catch (error) {
-                    reject(new WError(error, `Redis: Error connecting to ${name}`));
-                }
+                let client = redis.createClient(
+                    this._config.redis[name].port,
+                    this._config.redis[name].host,
+                    options
+                );
+                client.on('ready', () => { resolve(new RedisClient(this, client)); });
+                client.on('error', error => { reject(new WError(error, `Redis: Error connecting to ${name}`)); });
             });
     }
 }

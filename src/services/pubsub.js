@@ -339,6 +339,8 @@ class PubSub {
                     case 'redis':
                         Promise.all([ this._redis.connect(name), this._redis.connect(name) ])
                             .then(([ pub, sub ]) => {
+                                sub.client.on('reconnecting', () => { this._logger.info(`[${subscriberName}] Connection lost. Reconnecting...`)});
+                                sub.client.on('subscribe', () => { this._logger.info(`[${subscriberName}] Subscribed successfully`)});
                                 resolve(new RedisPubSub(pub, sub));
                             })
                             .catch(error => {
