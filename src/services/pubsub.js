@@ -15,19 +15,19 @@ const WError = require('verror').WError;
 
 /**
  * Postgres PUBSUB client
- * @property {object} pub                           PUB client (PGPubSub)
- * @property {object} sub                           SUB client (PostgresClient)
+ * @property {object} pubConnector                  PUB client connector (PostgresClient)
+ * @property {object} subClient                     SUB client (PGPubSub)
  * @property {Map} channels                         Registered channels (name → Set of handlers)
  */
 class PostgresPubSub {
     /**
      * Create the client
-     * @property {object} pub                       PUB client (PGPubSub)
-     * @property {object} sub                       SUB client (PostgresClient)
+     * @param {object} pubConnector                 PUB client connector (PostgresClient)
+     * @param {object} subClient                    SUB client (PGPubSub)
      */
-    constructor(pub, sub) {
-        this.pub = pub;
-        this.sub = sub;
+    constructor(pubConnector, subClient) {
+        this.pubConnector = pubConnector;
+        this.subClient = subClient;
         this.channels = new Map();
     }
 
@@ -36,11 +36,10 @@ class PostgresPubSub {
      */
     done() {
         for (let channel of this.channels.keys()) {
-            this.sub.removeChannel(channel);
+            this.subClient.removeChannel(channel);
             this.channels.delete(channel);
         }
-        this.pub.done();
-        this.sub.close();
+        this.subClient.close();
     }
 
     /**
@@ -61,7 +60,7 @@ class PostgresPubSub {
                     if (handlers.has(handler))
                         return reject(new Error(`Channel already subscribed: ${channel}`));
 
-                    this.sub.addChannel(
+                    this.subClient.addChannel(
                         channel,
                         message => {
                             debug(`Received ${channel} (Postgres)`);
@@ -92,7 +91,7 @@ class PostgresPubSub {
                     if (!handlers.has(handler))
                         return reject(new Error(`No such handler in the channel: ${channel}`));
 
-                    this.sub.removeChannel(channel, handler);
+                    this.subClient.removeChannel(channel, handler);
 
                     handlers.delete(handler);
                     if (!handlers.size)
@@ -112,30 +111,43 @@ class PostgresPubSub {
      * @return {Promise}                            Resolves on success
      */
     publish(channel, message) {
-        return this.pub.query('NOTIFY $1, $2', [ channel, JSON.stringify(message) ]);
+        return this.pubConnector()
+            .then(pub => {
+                return pub.query('NOTIFY $1, $2', [ channel, JSON.stringify(message) ])
+                    .then(
+                        value => {
+                            pub.done();
+                            return value;
+                        },
+                        error => {
+                            pub.done();
+                            throw error;
+                        }
+                    );
+            });
     }
 }
 
 /**
  * Redis PUBSUB client
- * @property {object} pub                           PUB client (RedisClient)
- * @property {object} sub                           SUB client (RedisClient)
+ * @property {object} pubConnector                  PUB client connector (RedisClient)
+ * @property {object} subClient                     SUB client (RedisClient)
  * @property {Map} channels                         Registered channels (name → Set of handlers)
  */
 class RedisPubSub {
     /**
      * Create the client
-     * @property {object} pub                       PUB client (RedisClient)
-     * @property {object} sub                       SUB client (RedisClient)
+     * @param {object} pubConnector                 PUB client connector (RedisClient)
+     * @param {object} subClient                    SUB client (RedisClient)
      */
-    constructor(pub, sub) {
-        this.pub = pub;
-        this.sub = sub;
+    constructor(pubConnector, subClient) {
+        this.pubConnector = pubConnector;
+        this.subClient = subClient;
         this.channels = new Map();
 
         this._subscriptions = new Map();
-        this.sub.client.on('subscribe', this.onSubscribe.bind(this));
-        this.sub.client.on('message', this.onMessage.bind(this));
+        this.subClient.client.on('subscribe', this.onSubscribe.bind(this));
+        this.subClient.client.on('message', this.onMessage.bind(this));
     }
 
     /**
@@ -143,11 +155,10 @@ class RedisPubSub {
      */
     done() {
         for (let channel of this.channels.keys()) {
-            this.sub.client.unsubscribe(channel);
+            this.subClient.client.unsubscribe(channel);
             this.channels.delete(channel);
         }
-        this.pub.done();
-        this.sub.done();
+        this.subClient.done();
     }
 
     /**
@@ -177,7 +188,7 @@ class RedisPubSub {
                         return resolve();
 
                     this._subscriptions.set(channel, resolve);
-                    this.sub.client.subscribe(channel);
+                    this.subClient.client.subscribe(channel);
                 } catch (error) {
                     reject(new WError(error, `Subscribe attempt failed (${channel})`));
                 }
@@ -201,7 +212,7 @@ class RedisPubSub {
 
                     handlers.delete(handler);
                     if (!handlers.size) {
-                        this.sub.client.unsubscribe(channel);
+                        this.subClient.client.unsubscribe(channel);
                         this.channels.delete(channel);
                     }
 
@@ -219,7 +230,20 @@ class RedisPubSub {
      * @return {Promise}                            Resolves on success
      */
     publish(channel, message) {
-        return this.pub.query('PUBLISH', [ channel, JSON.stringify(message) ]);
+        return this.pubConnector()
+            .then(pub => {
+                return pub.query('PUBLISH', [ channel, JSON.stringify(message) ])
+                    .then(
+                        value => {
+                            pub.done();
+                            return value;
+                        },
+                        error => {
+                            pub.done();
+                            throw error;
+                        }
+                    );
+            });
     }
 
     /**
@@ -307,7 +331,7 @@ class PubSub {
      * @param {string|null} [cacheName=null]        Store and later reuse this pubsub client under this name
      * @return {Promise}                            Resolves to corresponding pubsub client instance
      */
-    connect(subscriberName = null, serverName = 'redis.main', cacheName = null) {
+    connect(subscriberName, serverName = 'redis.main', cacheName = null) {
         return new Promise((resolve, reject) => {
                 if (cacheName && this._cache.has(cacheName))
                     return resolve(this._cache.get(cacheName));
@@ -320,28 +344,26 @@ class PubSub {
                 let pubsub;
                 switch (server) {
                     case 'postgres':
-                        this._postgres.connect(name)
-                            .then(pub => {
-                                let connString = `postgresql://${config.user}:${config.password}@${config.host}:${config.port}/${config.db_name}`;
-                                let sub = new PGPubSub(connString, {
-                                    log: (...args) => {
-                                        if (args.length)
-                                            args[0] = `[${subscriberName}] ${args[0]}`;
-                                        this._logger.info(...args);
-                                    }
-                                });
-                                resolve(new PostgresPubSub(pub, sub));
-                            })
-                            .catch(error => {
-                                reject(new WError(error, `Error creating pubsub instance ${serverName}`));
+                        try {
+                            let connString = `postgresql://${config.user}:${config.password}@${config.host}:${config.port}/${config.db_name}`;
+                            let sub = new PGPubSub(connString, {
+                                log: (...args) => {
+                                    if (args.length)
+                                        args[0] = `[${subscriberName}] ${args[0]}`;
+                                    this._logger.info(...args);
+                                }
                             });
+                            resolve(new PostgresPubSub(() => { return this._postgres.connect(name); }, sub));
+                        } catch (error) {
+                            reject(new WError(error, `Error creating pubsub instance ${serverName}`));
+                        }
                         break;
                     case 'redis':
-                        Promise.all([ this._redis.connect(name), this._redis.connect(name) ])
-                            .then(([ pub, sub ]) => {
+                        this._redis.connect(name)
+                            .then(sub => {
                                 sub.client.on('reconnecting', () => { this._logger.info(`[${subscriberName}] Connection lost. Reconnecting...`); });
                                 sub.client.on('subscribe', () => { this._logger.info(`[${subscriberName}] Subscribed successfully`); });
-                                resolve(new RedisPubSub(pub, sub));
+                                resolve(new RedisPubSub(() => { return this._redis.connect(name); }, sub));
                             })
                             .catch(error => {
                                 reject(new WError(error, `Error creating pubsub instance ${serverName}`));
