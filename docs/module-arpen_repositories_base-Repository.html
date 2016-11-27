@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: PostgresPubSub</title>
+	<title>Documentation Class: Repository</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: PostgresPubSub</h1>
+	<h1 class="page-title">Class: Repository</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_pubsub.html">arpen/services/pubsub</a>~</span>
+            <span class="ancestors"><a href="module-arpen_repositories_base.html">arpen/repositories/base</a>~</span>
         
-        PostgresPubSub
+        Repository
         </h2>
         
-            <div class="class-description">Postgres PUBSUB client</div>
+            <div class="class-description">Repository base class</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="PostgresPubSub"><span class="type-signature"></span>new PostgresPubSub(pubConnector, subClient)</h4>
+    <h4 class="name" id="Repository"><span class="type-signature"></span>new Repository(postgres, util)</h4>
     
     
 </dt>
@@ -103,7 +103,7 @@
 
     
     <div class="description">
-        Create the client
+        Create repository
     </div>
     
 
@@ -138,13 +138,13 @@
 
         <tr>
             
-                <td class="name"><code>pubConnector</code></td>
+                <td class="name"><code>postgres</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Postgres</span>
 
 
 
@@ -155,20 +155,20 @@
 
             
 
-            <td class="description last">PUB client connector (PostgresClient)</td>
+            <td class="description last">Postgres service</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>subClient</code></td>
+                <td class="name"><code>util</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Util</span>
 
 
 
@@ -179,7 +179,7 @@
 
             
 
-            <td class="description last">SUB client (PGPubSub)</td>
+            <td class="description last">Util service</td>
         </tr>
 
     
@@ -190,107 +190,6 @@
 
     
 <dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>pubConnector</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">PUB client connector (PostgresClient)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>subClient</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">SUB client (PGPubSub)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>channels</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Map</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Registered channels (name → Set of handlers)</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
     
 
 	
@@ -366,7 +265,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="done"><span class="type-signature"></span>done()</h4>
+    <h4 class="name" id="search"><span class="type-signature"></span>search(table, fields [, options] [, reuseClient])</h4>
     
     
 </dt>
@@ -374,85 +273,7 @@
 
     
     <div class="description">
-        Client termination
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe(channel, handler)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Subscribe to a channel
+        Search repository
     </div>
     
 
@@ -475,6 +296,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -487,7 +310,7 @@
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>table</code></td>
             
 
             <td class="type">
@@ -501,23 +324,31 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Channel name</td>
+            <td class="description last">Table or view name</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>handler</code></td>
+                <td class="name"><code>fields</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Subscriber</span>
+<span class="param-type">Array.&lt;string></span>
 
 
 
@@ -525,10 +356,352 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Handler function</td>
+            <td class="description last">Fields to retrieve</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">
+                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>where</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">SQL WHERE clause: will be joined with 'AND'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Bound parameters (referenced as $1, $2, ... in SQL)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sortKey</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Used in ORDER BY if provided</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sortOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'asc'
+                
+                </td>
+            
+
+            <td class="description last">Used in ORDER BY if provided with sort_key</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pageSize</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">Used in LIMIT, 0 = all records</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pageNumber</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">Used in OFFSET</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reuseClient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PostgresClient</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Existing DB client to use (will create a new one otherwise)</td>
         </tr>
 
     
@@ -592,7 +765,18 @@
     
             
 <div class="param-desc">
-    Resolves on success
+    Returns promise resolving to the following:
+<pre>
+{
+     totalRows: 1, // total rows in result
+     totalPages: 1, // total number of pages
+     pageSize: 0, // page size
+     pageNumber: 1, // returned page number
+     sortKey: null, // key used to sort
+     sortOrder: 'asc', // sort order
+     data: [ ... ], // resulting rows as array
+}
+</pre>
 </div>
 
 
@@ -620,7 +804,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="unsubscribe"><span class="type-signature"></span>unsubscribe(channel, handler)</h4>
+    <h4 class="name" id="_loadMethods"><span class="type-signature"></span>_loadMethods(dir)</h4>
     
     
 </dt>
@@ -628,7 +812,7 @@
 
     
     <div class="description">
-        Unsubscribe from a channel
+        Load methods from given directory
     </div>
     
 
@@ -663,7 +847,7 @@
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>dir</code></td>
             
 
             <td class="type">
@@ -680,31 +864,7 @@
 
             
 
-            <td class="description last">Channel name</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>handler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Subscriber</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Handler function</td>
+            <td class="description last">Directory full path</td>
         </tr>
 
     
@@ -764,206 +924,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Resolves on success
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="publish"><span class="type-signature"></span>publish(channel, message)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Publish a message after passing it through JSON.stringify()
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>channel</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Channel name</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>message</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Message</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    Resolves on success
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
