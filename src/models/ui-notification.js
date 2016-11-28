@@ -7,7 +7,7 @@ const Model = require('./base');
 /**
  * Notification model class
  */
-class UiNotification extends Model {
+class UiNotificationModel extends Model {
     /**
      * Create model
      */
@@ -152,4 +152,4 @@ class UiNotification extends Model {
     }
 }
 
-module.exports = UiNotification;
+module.exports = UiNotificationModel;

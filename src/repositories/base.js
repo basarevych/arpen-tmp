@@ -12,10 +12,12 @@ const WError = require('verror').WError;
 class Repository {
     /**
      * Create repository
+     * @param {App} app                             The application
      * @param {Postgres} postgres                   Postgres service
      * @param {Util} util                           Util service
      */
-    constructor(postgres, util) {
+    constructor(app, postgres, util) {
+        this._app = app;
         this._postgres = postgres;
         this._util = util;
     }
@@ -31,7 +33,7 @@ class Repository {
      * @param {string} [options.sortOrder='asc']    Used in ORDER BY if provided with sort_key
      * @param {number} [options.pageSize=0]         Used in LIMIT, 0 = all records
      * @param {number} [options.pageNumber=1]       Used in OFFSET
-     * @param {PostgresClient} [reuseClient]        Existing DB client to use (will create a new one otherwise)
+     * @param {PostgresClient} [reuseClient]        Postgres client to use (will create a new one otherwise)
      * @return {Promise}                            Returns promise resolving to the following:
      * <pre>
      * {
@@ -134,7 +136,7 @@ class Repository {
             let methodName = this._util.dashedToCamel(name.replace(/\.js$/, ''));
             let file = path.join(dir, name);
             try {
-                this[methodName] = require(file);
+                this[methodName] = require(file).bind(this);
             } catch (error) {
                 throw new WError(error, `Repository._loadMethods() - processing: ${name}`);
             }

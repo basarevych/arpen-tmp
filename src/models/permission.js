@@ -7,7 +7,7 @@ const Model = require('./base');
 /**
  * Permission model class
  */
-class Permission extends Model {
+class PermissionModel extends Model {
     /**
      * Create model
      */
@@ -85,4 +85,4 @@ class Permission extends Model {
     }
 }
 
-module.exports = Permission;
+module.exports = PermissionModel;

@@ -8,7 +8,7 @@ const Model = require('./base');
 /**
  * User model class
  */
-class User extends Model {
+class UserModel extends Model {
     /**
      * Create model
      */
@@ -154,4 +154,4 @@ class User extends Model {
     }
 }
 
-module.exports = User;
+module.exports = UserModel;

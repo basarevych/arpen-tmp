@@ -7,7 +7,7 @@ const Model = require('./base');
 /**
  * Session model class
  */
-class Session extends Model {
+class SessionModel extends Model {
     /**
      * Create model
      */
@@ -127,4 +127,4 @@ class Session extends Model {
     }
 }
 
-module.exports = Session;
+module.exports = SessionModel;

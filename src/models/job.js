@@ -7,7 +7,7 @@ const Model = require('./base');
 /**
  * Job model class
  */
-class Job extends Model {
+class JobModel extends Model {
     /**
      * Create model
      */
@@ -271,4 +271,4 @@ class Job extends Model {
     }
 }
 
-module.exports = Job;
+module.exports = JobModel;

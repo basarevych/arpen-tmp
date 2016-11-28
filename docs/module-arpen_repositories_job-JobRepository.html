@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: PostgresPubSub</title>
+	<title>Documentation Class: JobRepository</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,18 +72,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: PostgresPubSub</h1>
+	<h1 class="page-title">Class: JobRepository</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-arpen_services_pubsub.html">arpen/services/pubsub</a>~</span>
+            <span class="ancestors"><a href="module-arpen_repositories_job.html">arpen/repositories/job</a>~</span>
         
-        PostgresPubSub
+        JobRepository
         </h2>
         
-            <div class="class-description">Postgres PUBSUB client</div>
+            <div class="class-description">Job repository class</div>
         
     
 </header>
@@ -95,7 +95,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="PostgresPubSub"><span class="type-signature"></span>new PostgresPubSub(pubConnector, subClient)</h4>
+    <h4 class="name" id="JobRepository"><span class="type-signature"></span>new JobRepository(app, config, postgres, cacher, util)</h4>
     
     
 </dt>
@@ -103,7 +103,7 @@
 
     
     <div class="description">
-        Create the client
+        Create repository
     </div>
     
 
@@ -138,13 +138,13 @@
 
         <tr>
             
-                <td class="name"><code>pubConnector</code></td>
+                <td class="name"><code>app</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">App</span>
 
 
 
@@ -155,14 +155,14 @@
 
             
 
-            <td class="description last">PUB client connector (PostgresClient)</td>
+            <td class="description last">The application</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>subClient</code></td>
+                <td class="name"><code>config</code></td>
             
 
             <td class="type">
@@ -179,7 +179,79 @@
 
             
 
-            <td class="description last">SUB client (PGPubSub)</td>
+            <td class="description last">Configuration service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>postgres</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Postgres</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Postgres service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cacher</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cacher</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Cacher service</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>util</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Util</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Util service</td>
         </tr>
 
     
@@ -190,107 +262,6 @@
 
     
 <dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>pubConnector</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">PUB client connector (PostgresClient)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>subClient</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">SUB client (PGPubSub)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>channels</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Map</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Registered channels (name → Set of handlers)</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
     
 
 	
@@ -357,6 +328,152 @@
 
     
 
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id=".provides">
+    <h4 id=".provides"><span class="type-signature">&lt;static> </span>provides<span class="type-signature"> :string</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Service name is 'repositories.job'
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".requires">
+    <h4 id=".requires"><span class="type-signature">&lt;static> </span>requires<span class="type-signature"> :Array.&lt;string></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Dependencies as constructor arguments
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        </dl>
     
 
     
@@ -366,7 +483,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="done"><span class="type-signature"></span>done()</h4>
+    <h4 class="name" id=".delete"><span class="type-signature">&lt;static> </span>delete(job [, reuseClient])</h4>
     
     
 </dt>
@@ -374,7 +491,7 @@
 
     
     <div class="description">
-        Client termination
+        Delete a job
     </div>
     
 
@@ -383,6 +500,103 @@
     
 
     
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>job</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JobModel</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Job model</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reuseClient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PostgresClient</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
     
 
     
@@ -436,6 +650,30 @@
     
 
     
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves to number of deleted records
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
 
     
 </dd>
@@ -444,7 +682,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe(channel, handler)</h4>
+    <h4 class="name" id=".findAll"><span class="type-signature">&lt;static> </span>findAll( [reuseClient])</h4>
     
     
 </dt>
@@ -452,7 +690,7 @@
 
     
     <div class="description">
-        Subscribe to a channel
+        Find all jobs
     </div>
     
 
@@ -460,6 +698,9 @@
 
     
 
+    
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
     
     
         <h5>Parameters:</h5>
@@ -475,6 +716,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -487,7 +730,174 @@
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>reuseClient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PostgresClient</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves to array of models
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".findByScript"><span class="type-signature">&lt;static> </span>findByScript(script [, reuseClient])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Find jobs by script name
+    </div>
+    
+
+    
+
+    
+
+    
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>script</code></td>
             
 
             <td class="type">
@@ -501,23 +911,31 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Channel name</td>
+            <td class="description last">Script name to search by</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>handler</code></td>
+                <td class="name"><code>reuseClient</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Subscriber</span>
+<span class="param-type">PostgresClient</span>
 
 
 
@@ -525,10 +943,555 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Handler function</td>
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves to array of models
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".find"><span class="type-signature">&lt;static> </span>find(id [, reuseClient])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Find a job by ID
+    </div>
+    
+
+    
+
+    
+
+    
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">ID to search by</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reuseClient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PostgresClient</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves to array of models
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".processPending"><span class="type-signature">&lt;static> </span>processPending( [reuseClient])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Find next pending jobs for this server instance.<br>
+Found jobs that are expired are marked so, rest are marked as started and returned. Processed jobs statuses in the
+database are updated
+    </div>
+    
+
+    
+
+    
+
+    
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reuseClient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PostgresClient</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Resolves to array of models
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".restartHanging"><span class="type-signature">&lt;static> </span>restartHanging( [reuseClient])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Restart jobs started by this server
+    </div>
+    
+
+    
+
+    
+
+    
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reuseClient</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">PostgresClient</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
         </tr>
 
     
@@ -620,7 +1583,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="unsubscribe"><span class="type-signature"></span>unsubscribe(channel, handler)</h4>
+    <h4 class="name" id=".save"><span class="type-signature">&lt;static> </span>save(job [, reuseClient])</h4>
     
     
 </dt>
@@ -628,7 +1591,7 @@
 
     
     <div class="description">
-        Unsubscribe from a channel
+        Save job
     </div>
     
 
@@ -651,6 +1614,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -663,13 +1628,13 @@
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>job</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">JobModel</span>
 
 
 
@@ -677,23 +1642,31 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Channel name</td>
+            <td class="description last">Job model</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>handler</code></td>
+                <td class="name"><code>reuseClient</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Subscriber</span>
+<span class="param-type">PostgresClient</span>
 
 
 
@@ -701,10 +1674,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Handler function</td>
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
         </tr>
 
     
@@ -768,7 +1751,7 @@
     
             
 <div class="param-desc">
-    Resolves on success
+    Resolves to record ID
 </div>
 
 
@@ -796,7 +1779,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="publish"><span class="type-signature"></span>publish(channel, message)</h4>
+    <h4 class="name" id=".search"><span class="type-signature">&lt;static> </span>search( [options] [, reuseClient])</h4>
     
     
 </dt>
@@ -804,7 +1787,7 @@
 
     
     <div class="description">
-        Publish a message after passing it through JSON.stringify()
+        Find jobs by query
     </div>
     
 
@@ -812,6 +1795,9 @@
 
     
 
+    
+        <h5>This:</h5>
+        <ul><li>JobRepository</li></ul>
     
     
         <h5>Parameters:</h5>
@@ -827,6 +1813,8 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -839,13 +1827,13 @@
 
         <tr>
             
-                <td class="name"><code>channel</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
 
@@ -853,23 +1841,33 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Channel name</td>
+            <td class="description last">Base Repository.search() options</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>message</code></td>
+                <td class="name"><code>reuseClient</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">PostgresClient</span>
 
 
 
@@ -877,10 +1875,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Message</td>
+            <td class="description last">Postgres client to use (will create a new one otherwise)</td>
         </tr>
 
     
@@ -944,7 +1952,8 @@
     
             
 <div class="param-desc">
-    Resolves on success
+    Resolves to sanitized base Repository.search() result (dates are converted
+                                         to a number of milliseconds since Epoch)
 </div>
 
 
@@ -1018,7 +2027,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2016-11-28T08:04:41+02:00
+		on 2016-11-28T08:04:40+02:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

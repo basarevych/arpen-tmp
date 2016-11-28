@@ -7,7 +7,7 @@ const Model = require('./base');
 /**
  * Role model class
  */
-class Role extends Model {
+class RoleModel extends Model {
     /**
      * Create model
      */
@@ -76,4 +76,4 @@ class Role extends Model {
     }
 }
 
-module.exports = Role;
+module.exports = RoleModel;
