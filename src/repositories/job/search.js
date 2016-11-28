@@ -8,12 +8,11 @@ const moment = require('moment-timezone');
 /**
  * Find jobs by query
  * @method search
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {object} [options]                Base Repository.search() options
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves to sanitized base Repository.search() result (dates are converted
  *                                          to a number of milliseconds since Epoch)
- * @this JobRepository
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (options, reuseClient) {
     return super.search(

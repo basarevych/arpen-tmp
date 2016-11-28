@@ -8,11 +8,10 @@ const WError = require('verror').WError;
 /**
  * Find jobs by script name
  * @method findByScript
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {string} script                   Script name to search by
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves to array of models
- * @this JobRepository
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (script, reuseClient) {
     return Promise.resolve()

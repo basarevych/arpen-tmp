@@ -8,10 +8,10 @@ const WError = require('verror').WError;
 /**
  * Save job
  * @method save
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {JobModel} job                    Job model
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves to record ID
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (job, reuseClient) {
     return Promise.resolve()

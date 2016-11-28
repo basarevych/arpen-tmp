@@ -11,10 +11,9 @@ const WError = require('verror').WError;
  * Found jobs that are expired are marked so, rest are marked as started and returned. Processed jobs statuses in the
  * database are updated
  * @method processPending
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves to array of models
- * @this JobRepository
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (reuseClient) {
     return Promise.resolve()

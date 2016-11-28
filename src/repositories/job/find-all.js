@@ -8,10 +8,9 @@ const WError = require('verror').WError;
 /**
  * Find all jobs
  * @method findAll
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves to array of models
- * @this JobRepository
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (reuseClient) {
     return Promise.resolve()

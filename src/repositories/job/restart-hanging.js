@@ -8,10 +8,9 @@ const WError = require('verror').WError;
 /**
  * Restart jobs started by this server
  * @method restartHanging
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves on success
- * @this JobRepository
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (reuseClient) {
     return Promise.resolve()

@@ -8,11 +8,10 @@ const WError = require('verror').WError;
 /**
  * Find a job by ID
  * @method find
+ * @memberOf module:arpen/repositories/job~JobRepository
  * @param {number} id                       ID to search by
  * @param {PostgresClient} [reuseClient]    Postgres client to use (will create a new one otherwise)
  * @return {Promise}                        Resolves to array of models
- * @this JobRepository
- * @memberOf module:arpen/repositories/job~JobRepository
  */
 module.exports = function (id, reuseClient) {
     let key = `sql:jobs-by-id:${id}`;
